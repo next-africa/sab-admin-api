@@ -1,5 +1,4 @@
-module: default
-version: 1
+service: default
 runtime: custom
 api_version: 1
 vm: true
