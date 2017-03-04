@@ -55,3 +55,5 @@ node_modules
 
 key.json
 *~
+
+.idea/*
