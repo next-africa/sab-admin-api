@@ -1,0 +1,11 @@
+module: default
+version: 1
+runtime: custom
+api_version: 1
+vm: true
+manual_scaling:
+  instances: 1
+
+handlers:
+  - url: .*
+    script: dynamic
