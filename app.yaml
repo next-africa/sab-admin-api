@@ -1,10 +1,7 @@
-service: default
-runtime: nodejs
-api_version: 1
-manual_scaling:
-  instances: 1
+
+runtime: go
+api_version: go1
 
 handlers:
-  - url: .*
-    script: dynamic
-env: flex
+- url: /.*
+  script: _go_app
