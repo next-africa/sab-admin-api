@@ -2,3 +2,10 @@
 *.pyc
 .idea/*
 /app.yaml
+.cache/
+
+src/*
+pkg/*
+
+!src/messenger-sdk
+
