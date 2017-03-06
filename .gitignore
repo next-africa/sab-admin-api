@@ -1,3 +1,11 @@
 *~
 *.pyc
 .idea/*
+.cache/
+
+src/*
+pkg/*
+
+!src/messenger-sdk
+
+
