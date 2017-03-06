@@ -7,4 +7,4 @@ handlers:
   script: _go_app
 
 env_variables:
-  HUB_VERIFY_TOKEN: 'messenger HUB_VERIFY_TOKEN'
+  HUB_VERIFY_TOKEN: '6b9b71fc-7ace-495d-85da-d0568349f587'
