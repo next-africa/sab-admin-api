@@ -1,7 +1,6 @@
 *~
 *.pyc
 .idea/*
-/app.yaml
 .cache/
 
 src/*
