@@ -2,6 +2,11 @@
 
 Bot for students to get informations for studying abroad
 
+# configure repository
+
+Run `make config` to configure this repository with the required clean and smudge filters. Clean and smudge filters are used to clean (format,
+remove secret values, etc...) before commiting.
+
 # How to use run it
 
 ```console
