@@ -101,7 +101,7 @@ func receivedMessage(event msdk.Callback, bot msdk.BotAPI) {
 			sendTextMessage(event.Sender, "Message with attachement received", bot)
 		}
 	}else if event.IsPostback(){
-		log.Print("[INFO] Received postback for user %d and page %d with payload %s at %d", senderID, recipientID, event.Postback.Payload, timeOfMessage)
+		log.Print("[INFO] Received postback for the user %d and page %d with payload %s at %d", senderID, recipientID, event.Postback.Payload, timeOfMessage)
 		sendTextMessage(event.Sender, "Postback Called", bot)
 	}
 }
