@@ -80,7 +80,7 @@ func receivedMessage(event msdk.Callback, bot msdk.BotAPI) {
 	timeOfMessage := event.Timestamp
 	message := event.Message
 
-	if &event.Message != nil{
+	if event.IsMessage(){
 		if bot.Debug {
 			log.Printf("[INFO]Received message for user %d and page %d at %d with message %s", senderID, recipientID, timeOfMessage, message)
 		}
@@ -92,7 +92,7 @@ func receivedMessage(event msdk.Callback, bot msdk.BotAPI) {
 			switch messageText {
 			case "generic":
 				sendGenericMessage(event.Sender, bot)
-				return
+
 			default:
 				sendTextMessage(event.Sender, messageText, bot)
 			}
@@ -100,7 +100,7 @@ func receivedMessage(event msdk.Callback, bot msdk.BotAPI) {
 		} else if &messageAttachments != nil {
 			sendTextMessage(event.Sender, "Message with attachement received", bot)
 		}
-	}else if &event.Postback != nil{
+	}else if event.IsPostback(){
 		log.Print("[INFO]Received postback for user %d and page %d with payload %s at %d", senderID, recipientID, event.Postback.Payload, timeOfMessage)
 		sendTextMessage(event.Sender, "Postback Called", bot)
 	}
@@ -135,7 +135,7 @@ func sendGenericMessage(recipient msdk.User, bot msdk.BotAPI) {
 	}
 
 	touchElement.AddButton(
-		msdk.NewURLButton("Open web url", "https://www.oculus.com/en-us/rift/"),
+		msdk.NewURLButton("Open web url", "https://www.oculus.com/en-us/touch/"),
 		msdk.NewPostbackButton("Call PostBack", "Payload for second bubble"),
 	)
 
