@@ -1,2 +1,1 @@
-*.go filter=gofmt
 *.yaml filter=handleSecrets
