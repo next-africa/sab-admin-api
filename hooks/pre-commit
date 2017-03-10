@@ -1,0 +1,3 @@
+#!/bin/sh
+
+scripts/gofmt.sh || exit 1

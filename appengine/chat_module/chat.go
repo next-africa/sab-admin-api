@@ -80,7 +80,8 @@ func receivedMessage(event msdk.Callback, bot msdk.BotAPI) {
 	timeOfMessage := event.Timestamp
 	message := event.Message
 
-	if event.IsMessage(){
+
+	if event.IsMessage() {
 		if bot.Debug {
 			log.Printf("[INFO]Received message for user %d and page %d at %d with message %s", senderID, recipientID, timeOfMessage, message)
 		}
@@ -100,16 +101,16 @@ func receivedMessage(event msdk.Callback, bot msdk.BotAPI) {
 		} else if &messageAttachments != nil {
 			sendTextMessage(event.Sender, "Message with attachement received", bot)
 		}
-	}else if event.IsPostback(){
+
+	}else if event.IsPostback() {
 		log.Print("[INFO] Received postback for user %d and page %d with payload %s at %d", senderID, recipientID, event.Postback.Payload, timeOfMessage)
 		sendTextMessage(event.Sender, "Postback Called", bot)
 	}
 }
+
+
 func sendTextMessage(recipient msdk.User, messageText string, bot msdk.BotAPI) {
 	bot.Send(recipient, msdk.NewMessage(messageText), msdk.RegularNotif)
-}
-func receivedPostback(event msdk.Callback){
-
 }
 
 func sendGenericMessage(recipient msdk.User, bot msdk.BotAPI) {
@@ -139,8 +140,7 @@ func sendGenericMessage(recipient msdk.User, bot msdk.BotAPI) {
 		msdk.NewPostbackButton("Call PostBack", "Payload for second bubble"),
 	)
 
-
-	genericTemp.AddElement(riftElement,touchElement)
+	genericTemp.AddElement(riftElement, touchElement)
 
 	bot.Send(recipient, genericTemp, msdk.RegularNotif)
 }
