@@ -1,0 +1,31 @@
+{
+  "name":  "",
+  "studyPrograms": [
+    {
+      "key":  " La clef du category/domaine'",
+      "minTuition": 2000,
+      "maxTuition": 18000,
+      "descriptionLink": "Le lien vers la page du domaine",
+      "tuitionLink": "Le lien vers la page sur le frais du programme si différent du lien vers la description",
+      "languages": ["language 1", "language 2"]
+    },
+    {
+      "key":  " La clef du category/domaine'",
+      "minTuition": 2000,
+      "maxTuition": 18000,
+      "descriptionLink": "Le lien vers la page du domaine",
+      "tuitionLink": "null ou le lien vers la page sur le frais du programme si différent du lien vers la description",
+      "languages": [ "language 2"]
+    }
+  ],
+  "languages": ["language 1", "language 2"],
+  "website": "Le lien vers site de l'universités",
+  "tuitionLink": "Lien vers la description des frais",
+  "programLink": "Lien vers la liste des domaines disponibles",
+  "address": "Adress",
+  "city": "Ville de l'université",
+  "state": "Province Au canada",
+  "minTuition": "Frais d'académique minimum",
+  "maxTuition": "Frais d'académique maximum"
+
+}
