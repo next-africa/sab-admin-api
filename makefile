@@ -2,6 +2,9 @@
 
 install: setup
 	go get google.golang.org/appengine
+	go get github.com/gorilla/mux
+	go get github.com/gorilla/context
+	go get github.com/stretchr/testify
 	pip install pyYaml
 
 config:

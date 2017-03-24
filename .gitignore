@@ -7,5 +7,6 @@ src/*
 pkg/*
 
 !src/messenger-sdk
+!src/sab.com
 
 secrets.json
