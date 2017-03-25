@@ -3,28 +3,35 @@
  */
 import React, {Component} from 'react';
 import SingleInput from '../components/SingleInput'
+import CheckboxOrRadioGroup from '../components/CheckboxOrRadioGroup'
+import Address from '../components/Address'
 
+var AddressTmp= {"line" :'', "city":'',"state":'', "code":''};
 
 class UniversityForm extends  Component{
     constructor(props) {
         super(props);
-        this.state={
+          this.state={
             universityName:  '',
-            studyPrograms: [],
+            domains: [],
             languages: [],
+            selectedLanguages:[],
             website: '',
-            tuitionLink: '',
-            programLink: '',
-            address: '',
-            city: '',
-            state: '',
-            minTuition: '',
-            maxTuition: ''
+            programListLink: '',
+            address: {},
+            tuition: ''
         };
 
         this.handleFormSubmit= this.handleFormSubmit.bind(this);
         this.handleClearForm= this.handleClearForm.bind(this);
         this.handleUniversityNameChange= this.handleUniversityNameChange.bind(this);
+        this.handleLangSelection= this.handleLangSelection.bind(this);
+        this.handleUniversityLinkChange= this.handleUniversityLinkChange.bind(this);
+        this.handleProgramListLink= this.handleProgramListLink.bind(this);
+        this.handleAddressChange= this.handleAddressChange.bind(this);
+        //this.handleCityChange= this.handleCityChange.bind(this);
+        //this.handleStateChange= this.handleStateChange.bind(this);
+        //this.handleCodeChange= this.handleCodeChange.bind(this);
     }
 
     componentDidMount(){
@@ -33,33 +40,42 @@ class UniversityForm extends  Component{
             .then(data=>{
                 this.setState({
                     universityName: data.name,
-                    studyPrograms: data.studyPrograms,
+                    domains: data.domains,
                     languages: data.languages,
+                    selectedLanguages:data.selectedLanguages,
                     website: data.website,
-                    tuitionLink: data.tuitionLink,
-                    programLink: data.programLink,
+                    programListLink: data.programListLink,
                     address: data.address,
-                    city: data.city,
-                    state: data.state,
-                    minTuition: data.min,
-                    maxTuition: data.maxTuition
+                    tuition:data.tuition
                 });
             });
+
+    }
+
+    handleUniversityLinkChange(e){
+        this.setState({website:e.target.value}, () => console.log('website link :',this.state.website));
+    }
+
+    handleLangSelection(e){
+        const newSelection= e.target.value;
+        let newSelectionArray;
+        if(this.state.selectedLanguages.indexOf(newSelection)> -1){
+            newSelectionArray= this.state.selectedLanguages.filter(s => s !== newSelection)
+        }else{
+            newSelectionArray= [...this.state.selectedLanguages, newSelection];
+        }
+        this.setState({selectedLanguages:newSelectionArray}, () => console.log('universite Language:', this.state.selectedLanguages));
     }
 
     handleClearForm(e){
         e.preventDefault();
         this.setState({
             universityName:'',
-            languages: '',
+            selectedLanguages: [],
             website: '',
-            tuitionLink: '',
-            programLink: '',
-            address: '',
-            city: '',
-            state: '',
-            minTuition: '',
-            maxTuition: ''
+            programListLink: '',
+            address:{},
+            tuition: ''
         });
     }
 
@@ -67,25 +83,32 @@ class UniversityForm extends  Component{
         e.preventDefault();
         const formPayload= {
             universityName: this.state.universityName,
-            studyPrograms: this.state.studyPrograms,
-            languages: this.state.languages,
+            domains: this.state.domains,
+            selectedLanguages: this.state.selectedLanguages,
             website: this.state.website,
-            tuitionLink: this.state.tuitionLink,
-            programLink: this.state.programLink,
+            programListLink: this.state.programListLink,
             address: this.state.address,
-            city: this.state.city,
-            state: this.state.state,
-            minTuition: this.state.min,
-            maxTuition: this.state.maxTuition
+            tuition: this.state.tuition
 
         };
         console.log('TODO==> Post Request:', formPayload)
         this.handleClearForm(e);
     }
-
-    handleUniversityNameChange(e){
-        this.setState({universityName: e.target.value}, () => console.log('name:', this.state.universityName));
+    handleProgramListLink(e){
+        this.setState({programListLink:e.target.value}, () => console.log('Program list link :', this.state.programListLink));
     }
+    handleUniversityNameChange(e){
+        this.setState({universityName: e.target.value}, () => console.log('University name:', this.state.universityName));
+    }
+
+    handleAddressChange(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+        AddressTmp[name] = value
+        this.setState({address:AddressTmp}, () => console.log('address line:', this.state.address));
+
+    }
+
     render(){
         return (
             <form className="container" onSubmit={this.handleFormSubmit}>
@@ -95,13 +118,47 @@ class UniversityForm extends  Component{
                     title={'University name'}
                     name={'name'}
                     controlFunc={this.handleUniversityNameChange}
-                    content={this.state.UniversityName}
+                    content={this.state.universityName}
                     placeholder={'Type the name of the university'}/>
+                <SingleInput
+                    inputType={'text'}
+                    title={'University website link'}
+                    name={'website'}
+                    controlFunc={this.handleUniversityLinkChange}
+                    content={this.state.website}
+                    placeholder={'Type the website link of the university'}/>
+                <SingleInput
+                    inputType={'text'}
+                    title={'link of the  programs list'}
+                    name={'programListLink'}
+                    controlFunc={this.handleProgramListLink}
+                    content={this.state.programListLink}
+                    placeholder={'Program list link'}/>
+                <CheckboxOrRadioGroup
+                    title={"Les langues d'enseignements"}
+                    type={'checkbox'}
+                    setName={'languages'}
+                    options={this.state.languages}
+                    controlFunc={this.handleLangSelection}
+                    selectedOptions={this.state.selectedLanguages}/>
+                <Address
+                    title="Address of university"
+                    items={["line","city","state", "code"]}
+                    controlLineFunc={this.handleAddressChange}
+                    controlCityFunc={this.handleAddressChange}
+                    controlSateFunc={this.handleAddressChange}
+                    controlCodeFunc={this.handleAddressChange}
+                    contentLine={this.state.address['line']}
+                    contentCity={this.state.address['city']}
+                    contentState={this.state.address['state']}
+                    contentCode={this.state.address['Postal code']}
+                />
 
                 <input
                     type="submit"
                     className="btn btn-primary float-right"
                     value="Submit"/>
+
                 <button
                     className="btn btn-link float-left"
                     onClick={this.handleClearForm}>clear form</button>

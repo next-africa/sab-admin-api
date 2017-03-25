@@ -1,5 +1,5 @@
-.App {
-  text-align: center;
+/*.App {
+  text-align: left;
 }
 
 .App-logo {
@@ -8,8 +8,8 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  background-color: #d4cdcd;*
+  height: 15px;
   padding: 20px;
   color: white;
 }
@@ -22,7 +22,7 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-
+*/
 
 body {
   padding-bottom: 80px;
@@ -39,10 +39,14 @@ input[type=radio] {
 .university-form.capitalize {
   text-transform: capitalize;
 }
-.checkbox-group {
+
+.checkbox-group, .address_items {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+.address_items {
+  width: 70%;
 }
 .checkbox-group .university-form {
   width: 50%;
@@ -50,4 +54,16 @@ input[type=radio] {
 input[type=submit],
 .btn-link {
   margin-top: 20px;
+}
+
+.navbar-right{
+  margin-top: -26px;
+}
+.navbar-left{
+  margin-top: -26px;
+}
+.nav>li>a{
+  color:white ! important;
+  textDecoration: none;
+  color: white;
 }
