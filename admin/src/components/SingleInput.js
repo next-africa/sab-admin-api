@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-const SingleInput = (props) => (
+const SingleInput= (props)=> (
     <div className="form-group">
         <label className="university-form">{props.title}</label>
         <input
@@ -18,7 +18,7 @@ const SingleInput = (props) => (
 );
 
 
-SingleInput.prototype = {
+SingleInput.propTypes = {
     inputType: React.PropTypes.oneOf(['text', 'number']).isRequired,
     title: React.PropTypes.string.isRequired,
     name:React.PropTypes.string.isRequired,
@@ -26,7 +26,7 @@ SingleInput.prototype = {
     content: React.PropTypes.oneOfType([
         React.PropTypes.string,
         React.PropTypes.number,
-    ]).isRequired,
+    ]),
     placeholder: React.PropTypes.string,
 
 };
