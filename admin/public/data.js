@@ -28,3 +28,5 @@ window.userInfos = [
     }
 ]
 
+universities = [];
+

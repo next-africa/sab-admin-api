@@ -68,3 +68,93 @@ input[type=submit],
   textDecoration: none;
   color: white;
 }
+
+/**************CARDITEM********************/
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: 'hidden';
+}
+
+.card-item {
+  background-color: #EFEFEF;
+  border-left: 2px solid #D5D5D5;
+  margin-bottom: 5px;
+  position: relative;
+  width: auto;
+}
+.card-item .card-color {
+  float: left;
+}
+.card-item .card-color.blue {
+  border-left: 4px solid #0099FF;
+}
+.card-item .card-color.purple {
+  border-left: 4px solid #CE04D9;
+}
+.card-item .card-color.red {
+  border-left: 4px solid #EB4463;
+}
+.card-item .card-color.yellow {
+  border-left: 4px solid #FFEA00;
+}
+.card-item .card-info {
+  float: left;
+  padding: 10px;
+}
+.card-item .card-name {
+  font-size: 1em;
+}
+.card-item .card-desc {
+  color: #AAAAAA;
+  font-size: 0.8em;
+  margin-top: 3px;
+}
+.card-item .card-delete {
+  background-color: #EDEDED;
+  color: #AAAAAA;
+  cursor: pointer;
+  font-size: 0.7em;
+  padding: 3px;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+.card-item .card-delete:hover {
+  background-color: #888888;
+  color: #FFFFFF;
+}
+
+.clear {
+  clear: both;
+}
+
+.form-container input {
+  border: 1px solid #AAAAAA;
+  font-size: 1em;
+  margin-right: 5px;
+  margin-top: 10px;
+  padding: 5px;
+}
+.form-container button {
+  background-color: #55ACEE;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 1em;
+  outline: none;
+  padding: 6px;
+
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
