@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import MenuLeft from './ContentHeader';
-
+//import NavbarItem from '../components/NavBarItem'
 const styles = {
     sidebar: {
         width: 256,
@@ -32,17 +32,16 @@ const SidebarContent = (props)=>{
 
     const links= [];
 
-    for(let ind = 0; ind < 20; ind++){
+    for(let ind = 0; ind < 1; ind++){
         links.push (
-            <a key={ind} href="#" style={styles.sidebarLink}> mock menu item {ind}</a>
+            <a key={ind} href="#" style={styles.sidebarLink} className="glyphicon glyphicon-book"> Universities</a>
         )
     }
     return(
         <MenuLeft title="Menu" style={style}>
             <div style={style.content}>
-                <a href="index.html" style={style.sidebarLink}>Home</a>
-                <div style={styles.divider}/>
                 {links}
+                <div style={styles.divider}/>
             </div>
         </MenuLeft>
     );

@@ -47,6 +47,7 @@ input[type=radio] {
 }
 .address_items {
   width: 70%;
+  margin-left: 45px;
 }
 .checkbox-group .university-form {
   width: 50%;
@@ -57,10 +58,10 @@ input[type=submit],
 }
 
 .navbar-right{
-  margin-top: -26px;
+  margin-top: -22px;
 }
 .navbar-left{
-  margin-top: -26px;
+  margin-top: -22px;
 }
 .nav>li>a{
   color:white ! important;
