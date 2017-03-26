@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import MenuLeft from './ContentHeader';
-//import NavbarItem from '../components/NavBarItem'
 const styles = {
     sidebar: {
         width: 256,

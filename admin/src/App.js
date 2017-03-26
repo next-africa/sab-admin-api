@@ -3,10 +3,9 @@ import '../node_modules/spectre.css/dist/spectre.min.css';
 import './App.css';
 import UniversityForm from './containers/UniversityForm';
 import NavBarItem from './components/NavBarItem'
-
 import ContentHeader from './containers/ContentHeader';
-import SidebarContent from './containers/SidebarContent'
-import  Sidebar  from 'react-sidebar'
+import SidebarContent from './containers/SidebarContent';
+import  Sidebar  from 'react-sidebar';
 const styles = {
     contentHeaderMenuLink: {
         textDecoration: 'none',
