@@ -5,9 +5,10 @@ import React, {Component} from 'react';
 import SingleInput from '../components/SingleInput'
 import CheckboxOrRadioGroup from '../components/CheckboxOrRadioGroup'
 import Address from '../components/Address'
+import Tuition from '../components/Tuition'
 
 var AddressTmp= {"line" :'', "city":'',"state":'', "code":''};
-
+var TuitionTmp = {"link":'', "amount":''}
 class UniversityForm extends  Component{
     constructor(props) {
         super(props);
@@ -19,7 +20,7 @@ class UniversityForm extends  Component{
             website: '',
             programListLink: '',
             address: {},
-            tuition: ''
+            tuition: {}
         };
 
         this.handleFormSubmit= this.handleFormSubmit.bind(this);
@@ -29,9 +30,7 @@ class UniversityForm extends  Component{
         this.handleUniversityLinkChange= this.handleUniversityLinkChange.bind(this);
         this.handleProgramListLink= this.handleProgramListLink.bind(this);
         this.handleAddressChange= this.handleAddressChange.bind(this);
-        //this.handleCityChange= this.handleCityChange.bind(this);
-        //this.handleStateChange= this.handleStateChange.bind(this);
-        //this.handleCodeChange= this.handleCodeChange.bind(this);
+        this.handleTuitionChange= this.handleTuitionChange.bind(this);
     }
 
     componentDidMount(){
@@ -75,7 +74,7 @@ class UniversityForm extends  Component{
             website: '',
             programListLink: '',
             address:{},
-            tuition: ''
+            tuition: {}
         });
     }
 
@@ -105,10 +104,16 @@ class UniversityForm extends  Component{
         const name = e.target.name;
         const value = e.target.value;
         AddressTmp[name] = value
-        this.setState({address:AddressTmp}, () => console.log('address line:', this.state.address));
+        this.setState({address:AddressTmp}, () => console.log('address:', this.state.address));
 
     }
+    handleTuitionChange(e){
+        const name = e.target.name;
+        const value = e.target.value;
+        TuitionTmp[name] = value;
+        this.setState({tuition:TuitionTmp}, () => console.log('Tuition ',this.state.tuition));
 
+    }
     render(){
         return (
             <form className="container" onSubmit={this.handleFormSubmit}>
@@ -152,6 +157,14 @@ class UniversityForm extends  Component{
                     contentCity={this.state.address['city']}
                     contentState={this.state.address['state']}
                     contentCode={this.state.address['Postal code']}
+                />
+                <Tuition
+                    title="Tuition of university"
+                    items={["link","amount"]}
+                    controlLinkFunc={this.handleTuitionChange}
+                    controlAmountFunc={this.handleTuitionChange}
+                    contentLink={this.state.tuition['link']}
+                    contentAmount={this.state.tuition['amount']}
                 />
 
                 <input

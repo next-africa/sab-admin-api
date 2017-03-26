@@ -22,6 +22,10 @@ const  NavBarItem = (props) => (
 
 NavBarItem.PropTypes={
     controlFunc: React.PropTypes.func,
+    url:React.PropTypes.string,
+    text:React.PropTypes.string.required,
+    style:React.PropTypes.string.required
+
 }
 
 export default NavBarItem;
