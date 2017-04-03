@@ -3,6 +3,12 @@
  */
 import React from 'react';
 import MenuLeft from './ContentHeader';
+import {Link} from  'react-router-dom';
+
+const linksRoutes=[
+    {text:'HOME', route:"/", style:"glyphicon glyphicon-home"},
+    {text:"Universities", route:"/api/v2/countries/", style:"glyphicon glyphicon-book"}
+    ];
 const styles = {
     sidebar: {
         width: 256,
@@ -31,15 +37,18 @@ const SidebarContent = (props)=>{
 
     const links= [];
 
-    for(let ind = 0; ind < 1; ind++){
+    for(let ind = 0; ind < linksRoutes.length; ind++){
         links.push (
-            <a key={ind} href="#" style={styles.sidebarLink} className="glyphicon glyphicon-book"> Universities</a>
+            <span key={ind}  style={styles.sidebarLink} className={linksRoutes[ind].style}>
+                <Link to={linksRoutes[ind].route}>{linksRoutes[ind].text}</Link>
+            </span>
         )
     }
     return(
         <MenuLeft title="Menu" style={style}>
             <div style={style.content}>
-                {links}
+                        {links}
+
                 <div style={styles.divider}/>
             </div>
         </MenuLeft>
