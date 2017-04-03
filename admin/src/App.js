@@ -130,16 +130,13 @@ const App = React.createClass({
             <Sidebar {...sidebarProps}>
                 <ContentHeader title={contentHeader}>
                     <div className="App">
-                        <div className="App-header">
-                        </div>
-
+                        <div className="App-header"></div>
                         <div className="container">
-
                             <div className="columns">
                                 <div className="col-md-9 centered">
                                     <div style={styles.content}>
-                                        <h3>Admin view to add a new university to the system</h3>
                                         <UniversityForm/>
+                                        {this.props.children}
                                     </div>
                                 </div>
                             </div>

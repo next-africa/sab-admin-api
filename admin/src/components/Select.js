@@ -2,21 +2,23 @@
  * Created by pdiouf on 2017-03-12.
  */
 import  React  from  'react'
-const Select= (props)=> (
+const Select = (props)=> (
 
     <div className="form-group">
-        name={props.name}
-        value={props.selectedOption}
-        onChange={props.controlFunc}
-        className={"form-select"}
-        <option value="">{props.placeholder}</option>
-        {props.options.map(opt =>{
-            return(
-                <option
-                    key={opt}
-                    value={opt}>{opt} </option>
-            );
-        })}
+        <select
+            name={props.name}
+            value={props.selectedOption}
+            onChange={props.controlFunc}
+            className="form-select">
+            <option value="">{props.placeholder}</option>
+            {props.options.map(opt =>{
+                return(
+                    <option
+                        key={opt}
+                        value={opt}>{opt}</option>
+                );
+            })}
+        </select>
 
     </div>
 );
