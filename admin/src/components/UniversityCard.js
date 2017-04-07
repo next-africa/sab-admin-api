@@ -3,17 +3,16 @@
  */
 
 import  React  from  'react'
-import {Link} from 'react-router-dom'
 
 
 const UniversityCard = (props) =>(
     // Create the card.
+    <a href="#" onClick={(event) => {props.setCurrentPage(event, {page:'viewUniversity',id:props.id});}}>
 
-        <Link to={`universitiy/${props.countryCode}${props.id+1}`}>
-            <div id={`univ-{props.key}`} className="card-item">
+    <div id={`univ${+props.id}`} className="card-item">
                 <div className={props.color}>
                     <div className="card-info">
-                        <div className="card-name">{props.universityName}</div>
+                        <div className="card-name">{props.name}</div>
                         <div className="card-desc">{props.website}</div>
                         <div className="card-desc">{props.address.state}</div>
                     </div>
@@ -21,7 +20,6 @@ const UniversityCard = (props) =>(
                 <div className="clear"></div>
                 <div className="languages">{props.selectedLanguages.length} languages</div>
             </div>
-        </Link>
+    </a>
 );
-
 export default  UniversityCard;
