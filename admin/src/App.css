@@ -28,7 +28,8 @@ body {
   padding-bottom: 80px;
 }
 form {
-  border: 0px solid #ccc;
+
+  border: 3px solid #ccc;
   padding: 0 20px 25px 20px;
   border-radius: 0px;
 }
@@ -39,15 +40,14 @@ input[type=radio] {
 .university-form.capitalize {
   text-transform: capitalize;
 }
-
-.checkbox-group, .address_items {
+.checkbox-group, .address_items, .tuitions_items{
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.address_items {
-  width: 70%;
-  margin-left: 45px;
+.address_items, .tuitions_items {
+  width: 80%;
+  margin-left: 30px;
 }
 .checkbox-group .university-form {
   width: 50%;
@@ -59,9 +59,12 @@ input[type=submit],
 
 .navbar-right{
   margin-top: -22px;
+  display: -webkit-box;
+  float: right!important;
 }
 .navbar-left{
   margin-top: -22px;
+  float: left !important
 }
 .nav>li>a{
   color:white ! important;
@@ -69,7 +72,10 @@ input[type=submit],
   color: white;
 }
 .centered{
-  width: 50%;
+  width: 80%;
+}
+.sidebar-toggle {
+  height: 30px;
 }
 /**************CARDITEM********************/
 body {
@@ -159,4 +165,7 @@ body {
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+}
+.btnNewUniversity{
+  float: right;
 }

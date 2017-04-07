@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import MenuLeft from './ContentHeader';
-import {Link} from  'react-router-dom';
 
 const linksRoutes=[
     {text:'HOME', route:"/", style:"glyphicon glyphicon-home"},
@@ -40,7 +39,8 @@ const SidebarContent = (props)=>{
     for(let ind = 0; ind < linksRoutes.length; ind++){
         links.push (
             <span key={ind}  style={styles.sidebarLink} className={linksRoutes[ind].style}>
-                <Link to={linksRoutes[ind].route}>{linksRoutes[ind].text}</Link>
+                {linksRoutes[ind].text}
+
             </span>
         )
     }
@@ -56,6 +56,7 @@ const SidebarContent = (props)=>{
 };
 
 SidebarContent.propTypes = {
-    style: React.PropTypes.object
+    style: React.PropTypes.object,
+    setCurrentPage: React.PropTypes.func,
 }
 export default SidebarContent;

@@ -1,21 +1,17 @@
 import React  from 'react';
 import '../node_modules/spectre.css/dist/spectre.min.css';
 import './App.css';
+import { Grid } from 'react-bootstrap';
 import UniversityForm from './containers/UniversityForm';
 import NavBarItem from './components/NavBarItem'
 import ContentHeader from './containers/ContentHeader';
 import SidebarContent from './containers/SidebarContent';
+import NewUniversity from './Pages/NewUniversity';
+import ViewUniversity from './Pages/ViewUniversity';
+import Universities from './containers/Universities'
 import  Sidebar  from 'react-sidebar';
-const styles = {
-    contentHeaderMenuLink: {
-        textDecoration: 'none',
-        color: 'white',
-        padding: 8,
-    },
-    content: {
-        padding: '16px',
-    },
-};
+var universitiesList = [];
+
 const App = React.createClass({
     getInitialState() {
         return {
@@ -26,8 +22,27 @@ const App = React.createClass({
             shadow: true,
             pullRight: false,
             touchHandleWidth: 20,
-            dragToggleDistance: 30,};
+            dragToggleDistance: 30,
+            currentPage:'universities',
+            currentPageProps:null,
+            currentPageId : 0
+        };
+
     },
+    setCurrentPage(event, { page, props , id}) {
+        if (event) event.preventDefault();
+        this.setState({ currentPage: page, currentPageProps: props , currentPageId: id});
+    },
+    currentPage() {
+        return {
+
+            universities:<Universities universitiesList={universitiesList}/>,
+            universityForm: <UniversityForm universitiesList={universitiesList}/>,
+            newUniversity: <NewUniversity universitiesList={universitiesList}/>,
+            viewUniversity: <ViewUniversity universitiesList={universitiesList} currentPageId={this.state.currentPageId}/>,
+        }[this.state.currentPage];
+    },
+
     componentWillMount() {
         const mql = window.matchMedia(`(min-width: 800px)`);
         mql.addListener(this.mediaQueryChanged);
@@ -104,7 +119,7 @@ const App = React.createClass({
 
         const contentHeader = (
 
-            <span>
+            <div className="sidebar-toggle">
                 <ul className="nav navbar-nav navbar-left">
                     {items}
                 </ul>
@@ -112,12 +127,8 @@ const App = React.createClass({
 
                     {user}
                 </ul>
-                <span>
-                    {this.state.docked &&
-                    <a onClick={this.toggleDocked} href="#" style={styles.contentHeaderMenuLink}></a>}
-                    <span> S-A-B</span>
-                </span>
-            </span>
+
+            </div>
         );
 
         const sidebarProps = {
@@ -134,12 +145,23 @@ const App = React.createClass({
                         <div className="container">
                             <div className="columns">
                                 <div className="col-md-9 centered">
-                                    <div style={styles.content}>
-                                        <UniversityForm/>
-                                        {this.props.children}
-                                    </div>
+                                        <Grid>
+                                            {
+                                                React.cloneElement(this.currentPage(), {
+                                                    setCurrentPage: this.setCurrentPage,
+                                                    currentPage: this.state.currentPage,
+                                                    ...this.state.currentPageProps,
+                                                })
+                                            }
+                                        </Grid>
+
                                 </div>
                             </div>
+                            <footer>
+                                <p>
+                                    <strong>S</strong>tudy <strong>A</strong>broad <strong>B</strong>ot.
+                                </p>
+                            </footer>
                         </div>
                     </div>
                 </ContentHeader>
@@ -147,5 +169,8 @@ const App = React.createClass({
         );
     }
  });
+//App.propTypes = {
+    //children: React.propTypes.node,
+//}
 
 export default App;

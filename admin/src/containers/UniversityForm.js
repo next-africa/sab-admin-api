@@ -1,52 +1,51 @@
 /**
  * Created by pdiouf on 2017-03-11.
  */
-import React from 'react';
+import React, {Component} from 'react';
 import SingleInput from '../components/SingleInput'
 import CheckboxOrRadioGroup from '../components/CheckboxOrRadioGroup'
-import Address from '../components/Address'
-import Tuition from '../components/Tuition'
-import Modal from '../../node_modules/react-bootstrap/lib/Modal'
-import Button from '../../node_modules/react-bootstrap/lib/Button'
 import Select from '../components/Select'
-import Universities from './Universities'
 var AddressTmp= {"line" :'', "city":'',"state":'', "code":''};
 var TuitionTmp = {"link":'', "amount":''} ;
-var universitiesList = [];
-// A card item we want to display.
-var If = React.createClass({
-    render:function(){
-        if(this.props.numberOfUniversities){
-            return this.props.children;
-        }
-        else{
-            return false;
-        }
-    }
-});
-const UniversityForm = React.createClass({
-    getInitialState(){
-        return {
-            id: 0,
-            universityName: '',
+var id = 0;
+class UniversityForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state ={
+            name: '',
             domains: '',
             languages: ['en','fr','de','es' ],
             selectedLanguages: [],
             website: '',
             programListLink: '',
-            address: '',
+            address: {line :'', city:'',state:'', code:''},
             tuition: {},
             showModal: false,
-            countryCode:''
+            countryCode:'',
+            setCurrentPage :null
         };
-    },
 
+        this.handleProgramListLink = this.handleProgramListLink.bind(this);
+        this.handleCountrySelection = this.handleCountrySelection.bind(this);
+        this.handleUniversityLinkChange = this.handleUniversityLinkChange.bind(this);
+        this.handleLangSelection = this.handleLangSelection.bind(this);
+        this.handleClearForm = this.handleClearForm.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.handleProgramListLink = this.handleProgramListLink.bind(this);
+        this.handleUniversityNameChange = this.handleUniversityNameChange.bind(this);
+        this.handleAddressChange = this.handleAddressChange.bind(this);
+    }
+
+    setCurrentPage(event, { page, props }) {
+        if (event) event.preventDefault();
+        this.setState({ currentPage: page, currentPageProps: props });
+    }
     handleCountrySelection(e){
         this.setState({countryCode:e.target.value}, () => console.log('Country  :',this.state.countryCode));
-    },
+    }
     handleUniversityLinkChange(e){
         this.setState({website:e.target.value}, () => console.log('website link :',this.state.website));
-    },
+    }
 
     handleLangSelection(e){
         const newSelection= e.target.value;
@@ -57,20 +56,19 @@ const UniversityForm = React.createClass({
             newSelectionArray= [...this.state.selectedLanguages, newSelection];
         }
         this.setState({selectedLanguages:newSelectionArray}, () => console.log('universite Language:', this.state.selectedLanguages));
-    },
+    }
 
     handleClearForm(e){
         e.preventDefault();
         this.setState({
-            universityName:'',
+            name:'',
             selectedLanguages: [],
             website: '',
             programListLink: '',
             address:{},
             tuition: {}
         });
-        this.close();
-    },
+    }
 
     handleFormSubmit(e){
         e.preventDefault();
@@ -78,8 +76,8 @@ const UniversityForm = React.createClass({
         var colors = ['blue', 'purple', 'red', 'yellow'];
 
         const formPayload= {
-            id:this.state.id++,
-            universityName: this.state.universityName,
+            id:id++,
+            name: this.state.universityName,
             domains: this.state.domains,
             selectedLanguages: this.state.selectedLanguages,
             website: this.state.website,
@@ -91,54 +89,37 @@ const UniversityForm = React.createClass({
 
         };
 
-        universitiesList.push(formPayload);
-        console.log('TODO==> Post Request:', universitiesList)
+        this.props.universitiesList.push(formPayload);
+        console.log('TODO==> Post Request:', this.props.universitiesList)
         this.handleClearForm(e);
+        this.props.setCurrentPage(event, {page:'universities'});
 
-        this.close();
-    },
+    }
     handleProgramListLink(e){
         this.setState({programListLink:e.target.value}, () => console.log('Program list link :', this.state.programListLink));
-    },
+    }
     handleUniversityNameChange(e){
-        this.setState({universityName: e.target.value}, () => console.log('University name:', this.state.universityName));
-    },
-
+        this.setState({name: e.target.value}, () => console.log('University name:', this.state.name));
+    }
     handleAddressChange(e) {
         const name = e.target.name;
         const value = e.target.value;
         AddressTmp[name] = value;
-        this.setState({address:AddressTmp}, () => console.log('address:', this.state.address));
+        this.setState({address: AddressTmp}, () => console.log('address:', this.state.address));
+    }
 
-    },
-    handleTuitionChange(e){
+    handleTuitionChange(e) {
         const name = e.target.name;
         const value = e.target.value;
         TuitionTmp[name] = value;
-        this.setState({tuition:TuitionTmp}, () => console.log('Tuition ',this.state.tuition));
+        this.setState({tuition: TuitionTmp}, () => console.log('tuition:', this.state.tuition));
+    }
 
-    },
-    close(){
-        this.setState({showModal:false});
-    },
-    open(){
-        this.setState({showModal:true});
-    },
 
     render(){
         return (
-            <div>
-                <If numberOfUniversities={universitiesList.length}>
-                    <Universities  universitiesList={universitiesList}/>
-                </If>
-
-                <Button bsStyle="primary"
-                        bsSize="large"
-                        onClick={this.open}>Add university
-                </Button>
-                <Modal show={this.state.showModal} onHide={this.close}>
                     <form className="container" onSubmit={this.handleFormSubmit}>
-                        <h5> Ajouter une université </h5>
+                        <h5> All inputs are required</h5>
                         <Select
                             name={'countryCode'}
                             selectedOption={this.state.countryCode}
@@ -173,41 +154,75 @@ const UniversityForm = React.createClass({
                             options={this.state.languages}
                             controlFunc={this.handleLangSelection}
                             selectedOptions={this.state.selectedLanguages}/>
-                        <Address
-                            title="Address of university"
-                            items={["line","city","state", "postalCode"]}
-                            controlLineFunc={this.handleAddressChange}
-                            controlCityFunc={this.handleAddressChange}
-                            controlSateFunc={this.handleAddressChange}
-                            controlCodeFunc={this.handleAddressChange}
-                            contentLine={this.state.address['line']}
-                            contentCity={this.state.address['city']}
-                            contentState={this.state.address['state']}
-                            contentCode={this.state.address['postalCode']}
-                        />
-                        <Tuition
-                            title="Tuition of university"
-                            items={["link","amount"]}
-                            controlLinkFunc={this.handleTuitionChange}
-                            controlAmountFunc={this.handleTuitionChange}
-                            contentLink={this.state.tuition['link']}
-                            contentAmount={this.state.tuition['amount']}
-                        />
+                        <div>
+                            <label className="university-form">University's adresse</label>
+                        <div className="address_items">
 
+                            <SingleInput
+                                inputType={'text'}
+                                title={'line'}
+                                name={'line'}
+                                controlFunc={this.handleAddressChange}
+                                content={this.state.address['line']}
+                                placeholder={'Type the line'}/>
+                            <SingleInput
+                                inputType={'text'}
+                                title={'city'}
+                                name={'city'}
+                                controlFunc={this.handleAddressChange}
+                                content={this.state.address['city']}
+                                placeholder={'Type the city'}/>
+
+                            <SingleInput
+                                inputType={'text'}
+                                title={'state'}
+                                name={'state'}
+                                controlFunc={this.handleAddressChange}
+                                content={this.state.address['state']}
+                                placeholder={'Type the state'}/>
+
+                            <SingleInput
+                                inputType={'text'}
+                                title={'code'}
+                                name={'code'}
+                                controlFunc={this.handleAddressChange}
+                                content={this.state.address['code']}
+                                placeholder={'Type the Postal code'}/>
+                        </div>
+                        </div>
+                        <div>
+                            <label className="university-form">Tuition of university</label>
+                            <div className="tuitions_items">
+
+                                <SingleInput
+                                    inputType={'text'}
+                                    title={'link'}
+                                    name={'link'}
+                                    controlFunc={this.handleTuitionChange}
+                                    content={this.state.tuition['link']}
+                                    placeholder={'Type the link'}/>
+                                <SingleInput
+                                    inputType={'text'}
+                                    title={'amount'}
+                                    name={'amount'}
+                                    controlFunc={this.handleTuitionChange}
+                                    content={this.state.tuition['amount']}
+                                    placeholder={'Type the amount'}/>
+                            </div>
+                        </div>
                         <input
                             type="submit"
                             className="btn btn-primary float-right"
-                            value="Add"/>
+                            value="Add University"
+                        />
 
                         <button
                             className="btn btn-link float-left"
                             onClick={this.handleClearForm}>Cancel</button>
 
                     </form>
-                </Modal>
-            </div>
 
         );
-    },
-})
+    }
+}
 export default UniversityForm;

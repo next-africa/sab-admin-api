@@ -1,3 +1,5 @@
-/**
- * Created by pdiouf on 2017-04-02.
- */
+<span>
+                    {this.state.docked &&
+                    <a onClick={this.toggleDocked} href="#" style={styles.contentHeaderMenuLink}></a>}
+    <span> S-A-B</span>
+                </span>
