@@ -77,7 +77,7 @@ class UniversityForm extends Component {
 
         const formPayload= {
             id:id++,
-            name: this.state.universityName,
+            name: this.state.name,
             domains: this.state.domains,
             selectedLanguages: this.state.selectedLanguages,
             website: this.state.website,
