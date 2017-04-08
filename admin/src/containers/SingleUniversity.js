@@ -22,7 +22,7 @@ class SingleUniversity extends Component{
                         <div>icone</div>
                         <div>
                             <p> {university.address.line}</p>
-                            <p> {university.address.city} ({university.address.state}),{university.address.line}</p>
+                            <p> {university.address.city} ({university.address.state}),{university.address.code}</p>
                         </div>
                     </div>
                     <div className="U-links">
