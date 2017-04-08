@@ -19,7 +19,7 @@ class UniversityForm extends Component {
             website: '',
             programListLink: '',
             address: {line :'', city:'',state:'', code:''},
-            tuition: {},
+            tuition: {"link":'', "amount":''},
             showModal: false,
             countryCode:'',
             setCurrentPage :null
@@ -34,6 +34,7 @@ class UniversityForm extends Component {
         this.handleProgramListLink = this.handleProgramListLink.bind(this);
         this.handleUniversityNameChange = this.handleUniversityNameChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
+        this.handleTuitionChange = this.handleTuitionChange.bind(this);
     }
 
     setCurrentPage(event, { page, props }) {
