@@ -15,11 +15,11 @@ class UniversityForm extends Component {
             name: '',
             domains: '',
             languages: ['en','fr','de','es' ],
-            selectedLanguages: [],
+            selectedLanguages: ['en','fr'],
             website: '',
             programListLink: '',
             address: {line :'', city:'',state:'', code:''},
-            tuition: {"link":'', "amount":''},
+            tuition: {link:'', amount:''},
             showModal: false,
             countryCode:'',
             setCurrentPage :null
@@ -66,8 +66,8 @@ class UniversityForm extends Component {
             selectedLanguages: [],
             website: '',
             programListLink: '',
-            address:{},
-            tuition: {}
+            address: {line :'', city:'',state:'', code:''},
+            tuition: {link:'', amount:''},
         });
     }
 
@@ -94,6 +94,17 @@ class UniversityForm extends Component {
         console.log('TODO==> Post Request:', this.props.universitiesList)
         this.handleClearForm(e);
         this.props.setCurrentPage(event, {page:'universities'});
+        fetch("countries/"+formPayload.countryCode+"/universities/", {method: "POST", body: JSON.stringify({formPayload})})
+            .then((response) => response.json())
+            .then((responseData) => {
+                console.log(
+                    "POST Response",
+                    "Response Body -> " + JSON.stringify(responseData.body)
+                )
+            });
+
+
+
 
     }
     handleProgramListLink(e){
@@ -119,6 +130,7 @@ class UniversityForm extends Component {
 
     render(){
         return (
+
                     <form className="container" onSubmit={this.handleFormSubmit}>
                         <h5> All inputs are required</h5>
                         <Select
@@ -132,7 +144,7 @@ class UniversityForm extends Component {
                             title={'University name'}
                             name={'name'}
                             controlFunc={this.handleUniversityNameChange}
-                            content={this.state.universityName}
+                            content={this.state.name}
                             placeholder={'Type the name of the university'}/>
                         <SingleInput
                             inputType={'text'}

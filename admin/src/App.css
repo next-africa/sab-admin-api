@@ -77,6 +77,16 @@ input[type=submit],
 .sidebar-toggle {
   height: 30px;
 }
+
+
+.infoLeft{
+  float: left;
+  padding: 7px;
+  border-right: 1px dashed #333;
+}
+.infoRight{
+  float: right;
+}
 /**************CARDITEM********************/
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;

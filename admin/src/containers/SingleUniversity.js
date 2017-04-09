@@ -3,8 +3,11 @@
  */
 import React, {Component} from 'react' ;
 import NotFoundPage from '../components/NotFoundPage'
-class SingleUniversity extends Component{
+import {Grid, Col, Row} from 'react-bootstrap'
 
+import {Button} from 'react-bootstrap'
+
+class SingleUniversity extends Component{
     render(){
         const id = this.props.currentPageId;
         console.log("id",id);
@@ -18,30 +21,49 @@ class SingleUniversity extends Component{
             <div>
                 <h4 className="page-header">{university.name}</h4>
                 <div className="U-info">
-                    <div className="U-address">
-                        <div>icone</div>
-                        <div>
-                            <p> {university.address.line}</p>
-                            <p> {university.address.city} ({university.address.state}),{university.address.code}</p>
-                        </div>
-                    </div>
-                    <div className="U-links">
-                        <p> Languages : {university.selectedLanguages}</p>
-                        <p> Website : {university.website}</p>
-                        <p> ProgramListLink : {university.programListLink}</p>
-                        <p> Languages : {university.selectedLanguages}</p>
-                    </div>
-                    <div className="U-tuition">
-                        <p> Tuition link : {university.tuition.link}</p>
-                        <p> Tuition amount : {university.tuition.amount}</p>
-                    </div>
-                    <div className="U-domains">
+                    <Grid>
+                        <Row className="show-grid">
+                            <Col xs={6} md={4}>
+                                <div className="U-address infoLeft">
+                                    <div className="glyphicon glyphicon-map-marker"></div>
+                                    <div className="AddrInfo ">
+                                        <p> {university.address.line}</p>
+                                        <p> {university.address.city} ({university.address.state}),{university.address.code}</p>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={6} md={4}>
+                                <div className="U-links infoLeft">
+                                    <p><strong> Languages </strong>: {university.selectedLanguages}</p>
+                                    <p> Website : {university.website}</p>
+                                    <p> ProgramListLink : {university.programListLink}</p>
+                                    <p> Languages : {university.selectedLanguages}</p>
 
-                    </div>
+                                    <p> Tuition link : {university.tuition.link}</p>
+                                    <p> Tuition amount : {university.tuition.amount}</p>
+                                </div>
+                            </Col>
+                            <Col xs={6} md={4}>
+                                <div className="U-domains">
+                                    <div className="btnNewUniversity">
+                                        <Button bsStyle="primary"
+                                                bsSize="large"
+                                                className="pull-right"
+                                                >
+                                            Add Domain
+
+                                        </Button>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Grid>
+
+
                 </div>
                 <button
-                    className="btn btn-link float-left"
-                    onClick={(event) => {this.props.setCurrentPage(event, {page:'universities'});}}>back to list</button>
+                    className="btn btn-link float-right"
+                    onClick={(event) => {this.props.setCurrentPage(event, {page:'universities'});}}>back to the list</button>
             </div>
         )
     }

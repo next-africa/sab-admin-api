@@ -2,9 +2,10 @@
  * Created by pdiouf on 2017-03-12.
  */
 import React from 'react';
-const Select= (props) => (
+
+const TextArea = (props) => (
     <div className="form-group">
-        <label className="university-form"></label>
+        <label className="form-label">{props.title}</label>
         <textarea
             className="form-input"
             style={props.resize ? null : {resize: 'none'}}
@@ -12,12 +13,11 @@ const Select= (props) => (
             rows={props.rows}
             value={props.content}
             onChange={props.controlFunc}
-            placeholder={props.placeholder}/>
+            placeholder={props.placeholder} />
     </div>
 );
 
-
-Select.propTypes={
+TextArea.propTypes = {
     title: React.PropTypes.string.isRequired,
     rows: React.PropTypes.number.isRequired,
     name: React.PropTypes.string.isRequired,
