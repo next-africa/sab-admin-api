@@ -1,22 +1,23 @@
 /**
  * Created by pdiouf on 2017-04-08.
  */
-
+import React, {Component} from 'react'
 import SingleInput from '../components/SingleInput'
 import TextArea from '../components/TextArea'
 import CheckboxOrRadioGroup from '../components/CheckboxOrRadioGroup'
 
 var TuitionTmp = {"link":'', "amount":''} ;
-domains = [];
+var domains = [];
+var id = 0;
 class DomainForm extends Component {
     constructor(props) {
         super(props);
         this.state ={
-
+            id:0,
             description:'',
-            tuition:'',
-            languages:[],
-            selectedLanguages:[]
+            tuition:{link:'', amount:''},
+            languages: ['en','fr','de','es' ],
+            selectedLanguages: ['en','fr'],
         };
 ;
         this.handleLangSelection = this.handleLangSelection.bind(this);
@@ -46,7 +47,6 @@ class DomainForm extends Component {
         e.preventDefault();
         this.setState({
             description:'',
-            languages:[],
             selectedLanguages:[],
             tuition: {link:'', amount:''},
         });
@@ -54,8 +54,6 @@ class DomainForm extends Component {
 
     handleFormSubmit(e){
         e.preventDefault();
-        //Create University
-        var colors = ['blue', 'purple', 'red', 'yellow'];
 
         const formPayload= {
             id:id++,
@@ -66,7 +64,7 @@ class DomainForm extends Component {
 
         };
 
-        this.props.domains.push(formPayload);
+        domains.push(formPayload);
         console.log('TODO==> Post Request:', this.props.domains)
         this.handleClearForm(e);
         this.props.setCurrentPage(event, {page:'universities'});

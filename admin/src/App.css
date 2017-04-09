@@ -179,3 +179,7 @@ body {
 .btnNewUniversity{
   float: right;
 }
+
+.modal-content {
+  border: none
+  }
