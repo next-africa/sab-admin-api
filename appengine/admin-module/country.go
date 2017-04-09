@@ -4,49 +4,64 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
-	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
 	"net/http"
-	"sab.com/countrystore"
-	"sab.com/helpers"
+	"sab.com/domain/country"
+	"sab.com/domain/helpers"
 )
 
-func CountriesHandler(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case "POST":
-		handleCreateCountry(w, r)
-		return
+func HandleGetAllCountries(writer http.ResponseWriter, request *http.Request) {
 
-	default:
-		w.WriteHeader(http.StatusMethodNotAllowed)
+	countryService := GetCountryService()
+
+	if countries, err := countryService.GetAllCountries(); err != nil {
+		log.Errorf(GetContextStore().GetContext(), "An error occured while getting all countries: %s", err.Error())
+		writer.WriteHeader(http.StatusInternalServerError)
+	} else {
+		responseByte, _ := json.Marshal(countries)
+		writer.Write(responseByte)
 	}
 }
-func handleCreateCountry(writer http.ResponseWriter, request *http.Request) {
-	var country countrystore.Country
-	helpers.JsonToObject(request.Body, &country)
 
-	countrystore.SaveCountry(country, appengine.NewContext(request))
-	writer.WriteHeader(http.StatusOK)
+func HandleSaveCountry(writer http.ResponseWriter, request *http.Request) {
+	countryService := GetCountryService()
+
+	var newCountry country.Country
+
+	if err := helpers.JsonToObject(request.Body, &newCountry); err != nil {
+		log.Errorf(GetContextStore().GetContext(), "Could not convert request body to Country: %s", err.Error())
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if err := countryService.SaveCountry(&newCountry); err != nil {
+		log.Errorf(GetContextStore().GetContext(), "An error occured while saving the Country: %s", err.Error())
+		writer.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	responseByte, _ := json.Marshal(newCountry)
+	writer.Write(responseByte)
+	writer.WriteHeader(http.StatusCreated)
 }
 
-func CountryHandler(w http.ResponseWriter, r *http.Request) {
+func HandleGetCountry(w http.ResponseWriter, r *http.Request) {
+	countryService := GetCountryService()
+
 	vars := mux.Vars(r)
 	code := vars["code"]
 
-	country, err := countrystore.GetCountryByCode(code, appengine.NewContext(r))
-
-	if err != nil {
-		if _, ok := err.(*countrystore.CountryNotFoundError); ok {
+	if theCountry, err := countryService.GetCountryByCode(code); err != nil {
+		if err == country.CountryNotFoundError {
 			w.WriteHeader(http.StatusNotFound)
 			fmt.Fprint(w, err)
-			return
 		} else {
+			log.Errorf(GetContextStore().GetContext(), "An error occured while getting country by code: %s", err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
-			fmt.Fprint(w, err)
 		}
+	} else {
+		responseByte, _ := json.Marshal(theCountry)
+		w.Write(responseByte)
+		w.WriteHeader(http.StatusOK)
 	}
-
-	responseByte, _ := json.Marshal(country)
-
-	w.Write(responseByte)
-	w.WriteHeader(http.StatusOK)
 }
