@@ -11,6 +11,7 @@ var router = mux.NewRouter()
 func withContext(f http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		GetContextStore().SetContext(appengine.NewContext(r))
+		w.Header().Add("Access-Control-Allow-Origin", "*")
 		f(w, r)
 	}
 }
