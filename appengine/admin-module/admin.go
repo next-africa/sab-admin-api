@@ -1,9 +1,11 @@
 package admin_module
 
 import (
+	"encoding/json"
 	"github.com/gorilla/mux"
 	"google.golang.org/appengine"
 	"net/http"
+	"sab.com/api"
 )
 
 var router = mux.NewRouter()
@@ -16,15 +18,31 @@ func withContext(f http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
+func writeApiError(writer http.ResponseWriter, errors interface{}, status int) {
+	apiResponse := api.ApiResponse{Errors: errors}
+	writeApiResponse(writer, apiResponse, status)
+}
+
+func writeApiSuccess(writer http.ResponseWriter, data interface{}, status int) {
+	apiResponse := api.ApiResponse{Data: data}
+	writeApiResponse(writer, apiResponse, status)
+}
+
+func writeApiResponse(writer http.ResponseWriter, response api.ApiResponse, status int) {
+	responseByte, _ := json.Marshal(response)
+	writer.WriteHeader(status)
+	writer.Write(responseByte)
+}
+
 func init() {
 
-	router.HandleFunc("/countries", withContext(HandleGetAllCountries)).Methods("GET")
-	router.HandleFunc("/countries", withContext(HandleSaveCountry)).Methods("POST", "PUT")
-	router.HandleFunc("/country/{code}", withContext(HandleGetCountry)).Methods("GET")
+	router.HandleFunc("/api/countries", withContext(HandleGetAllCountries)).Methods("GET")
+	router.HandleFunc("/api/countries", withContext(HandleSaveCountry)).Methods("POST", "PUT")
+	router.HandleFunc("/api/countries/{code}", withContext(HandleGetCountry)).Methods("GET")
 
-	router.HandleFunc("/countries/{countryCode}/universities", withContext(HandleGetAllUniversities)).Methods("GET")
-	router.HandleFunc("/countries/{countryCode}/universities", withContext(HandleCreateUniversity)).Methods("POST", "PUT")
-	router.HandleFunc("/countries/{countryCode}/universities/{id:[0-9]+}", withContext(HandleGetUniversity)).Methods("GET")
+	router.HandleFunc("/api/countries/{countryCode}/universities", withContext(HandleGetAllUniversities)).Methods("GET")
+	router.HandleFunc("/api/countries/{countryCode}/universities", withContext(HandleCreateUniversity)).Methods("POST", "PUT")
+	router.HandleFunc("/api/countries/{countryCode}/universities/{id:[0-9]+}", withContext(HandleGetUniversity)).Methods("GET")
 
-	http.Handle("/", router)
+	http.Handle("/api/", router)
 }

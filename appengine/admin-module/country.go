@@ -1,8 +1,6 @@
 package admin_module
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"google.golang.org/appengine/log"
 	"net/http"
@@ -11,15 +9,13 @@ import (
 )
 
 func HandleGetAllCountries(writer http.ResponseWriter, request *http.Request) {
-
 	countryService := GetCountryService()
 
 	if countries, err := countryService.GetAllCountries(); err != nil {
-		log.Errorf(GetContextStore().GetContext(), "An error occured while getting all countries: %s", err.Error())
-		writer.WriteHeader(http.StatusInternalServerError)
+		log.Errorf(GetContextStore().GetContext(), err.Error())
+		writeApiError(writer, []string{"An unknow error occured while getting all countries"}, http.StatusInternalServerError)
 	} else {
-		responseByte, _ := json.Marshal(countries)
-		writer.Write(responseByte)
+		writeApiSuccess(writer, countries, http.StatusOK)
 	}
 }
 
@@ -29,20 +25,18 @@ func HandleSaveCountry(writer http.ResponseWriter, request *http.Request) {
 	var newCountry country.Country
 
 	if err := helpers.JsonToObject(request.Body, &newCountry); err != nil {
-		log.Errorf(GetContextStore().GetContext(), "Could not convert request body to Country: %s", err.Error())
-		writer.WriteHeader(http.StatusBadRequest)
+		log.Errorf(GetContextStore().GetContext(), err.Error())
+		writeApiError(writer, []string{err.Error()}, http.StatusBadRequest)
 		return
 	}
 
 	if err := countryService.SaveCountry(&newCountry); err != nil {
-		log.Errorf(GetContextStore().GetContext(), "An error occured while saving the Country: %s", err.Error())
-		writer.WriteHeader(http.StatusInternalServerError)
+		log.Errorf(GetContextStore().GetContext(), err.Error())
+		writeApiError(writer, []string{"An error occured while saving the Country"}, http.StatusInternalServerError)
 		return
 	}
 
-	responseByte, _ := json.Marshal(newCountry)
-	writer.Write(responseByte)
-	writer.WriteHeader(http.StatusCreated)
+	writeApiSuccess(writer, newCountry, http.StatusCreated)
 }
 
 func HandleGetCountry(w http.ResponseWriter, r *http.Request) {
@@ -53,15 +47,12 @@ func HandleGetCountry(w http.ResponseWriter, r *http.Request) {
 
 	if theCountry, err := countryService.GetCountryByCode(code); err != nil {
 		if err == country.CountryNotFoundError {
-			w.WriteHeader(http.StatusNotFound)
-			fmt.Fprint(w, err)
+			writeApiError(w, []string{err.Error()}, http.StatusNotFound)
 		} else {
-			log.Errorf(GetContextStore().GetContext(), "An error occured while getting country by code: %s", err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
+			log.Errorf(GetContextStore().GetContext(), err.Error())
+			writeApiError(w, []string{"An unknow error occured while getting country by code"}, http.StatusInternalServerError)
 		}
 	} else {
-		responseByte, _ := json.Marshal(theCountry)
-		w.Write(responseByte)
-		w.WriteHeader(http.StatusOK)
+		writeApiSuccess(w, theCountry, http.StatusOK)
 	}
 }
