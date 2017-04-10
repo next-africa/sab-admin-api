@@ -42,8 +42,6 @@ const Address=(props)=> (
                         controlFunc={props.controlCodeFunc}
                         content={props.contentCode}
                         placeholder={'Type the Postal code'}/>
-
-
         </div>
     </div>
 );

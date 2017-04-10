@@ -115,7 +115,7 @@ const App = React.createClass({
 
         var items = data.map(this.generateItem);
         var user = userInfos.map(this.generateUserInfos);
-        const sidebar = <SidebarContent />;
+        const sidebar = <SidebarContent setCurrentPage={this.setCurrentPage}/>;
 
         const contentHeader = (
 
@@ -158,9 +158,11 @@ const App = React.createClass({
                                 </div>
                             </div>
                             <footer>
-                                <p>
-                                    <strong>S</strong>tudy <strong>A</strong>broad <strong>B</strong>ot.
-                                </p>
+                                <div className="copyRight">
+                                    <span className="glyphicon glyphicon-copyright-mark"></span>
+                                    <span> {new Date().getFullYear()}</span>
+                                    -Next Africa Inc.  all rights reserved
+                                </div>
                             </footer>
                         </div>
                     </div>

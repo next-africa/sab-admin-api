@@ -182,4 +182,8 @@ body {
 
 .modal-content {
   border: none
-  }
+}
+.copyRight {
+  margin-top: auto;
+  float: right;
+}

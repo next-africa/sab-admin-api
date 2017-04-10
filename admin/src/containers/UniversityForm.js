@@ -13,7 +13,7 @@ class UniversityForm extends Component {
         super(props);
         this.state ={
             name: '',
-            domains: '',
+            domains: [],
             languages: ['en','fr','de','es' ],
             selectedLanguages: ['en','fr'],
             website: '',
