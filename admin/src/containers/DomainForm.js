@@ -3,35 +3,57 @@
  */
 import React, {Component} from 'react'
 import SingleInput from '../components/SingleInput'
-import TextArea from '../components/TextArea'
 import CheckboxOrRadioGroup from '../components/CheckboxOrRadioGroup'
 
-var TuitionTmp = {"link":'', "amount":''} ;
-var domains = [];
+
 var id = 0;
 class DomainForm extends Component {
+
     constructor(props) {
         super(props);
         this.state ={
             id:0,
+            name:'',
             description:'',
             tuition:{link:'', amount:''},
             languages: ['en','fr','de','es' ],
             selectedLanguages: ['en','fr'],
+            TuitionTmp : {"link":'', "amount":''}
+
         };
-;
-        this.handleLangSelection = this.handleLangSelection.bind(this);
         this.handleClearForm = this.handleClearForm.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleTuitionChange = this.handleTuitionChange.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleLangSelection = this.handleLangSelection.bind(this);
     }
-
-    setCurrentPage(event, { page, props }) {
-        if (event) event.preventDefault();
-        this.setState({ currentPage: page, currentPageProps: props });
+    handleClearForm(e){
+        e.preventDefault();
+        this.setState({
+            name:'',
+            description:'',
+            selectedLanguages:[],
+            tuition: {link:'', amount:''},
+        });
     }
+    handleFormSubmit(e){
+        e.preventDefault();
+        const formPayload= {
+            id:id++,
+            name:this.state.name,
+            description: this.state.description,
+            selectedLanguages: this.state.selectedLanguages,
+            tuition: this.state.tuition,
 
+
+        };
+
+        this.props.domains.push(formPayload);
+        console.log('TODO==> Post Request:', this.props.domains)
+        this.handleClearForm(e);
+
+    }
     handleLangSelection(e){
         const newSelection= e.target.value;
         let newSelectionArray;
@@ -42,60 +64,36 @@ class DomainForm extends Component {
         }
         this.setState({selectedLanguages:newSelectionArray}, () => console.log('universite Language:', this.state.selectedLanguages));
     }
-
-    handleClearForm(e){
-        e.preventDefault();
-        this.setState({
-            description:'',
-            selectedLanguages:[],
-            tuition: {link:'', amount:''},
-        });
-    }
-
-    handleFormSubmit(e){
-        e.preventDefault();
-
-        const formPayload= {
-            id:id++,
-            description: this.state.description,
-            selectedLanguages: this.state.selectedLanguages,
-            tuition: this.state.tuition,
-
-
-        };
-
-        domains.push(formPayload);
-        console.log('TODO==> Post Request:', this.props.domains)
-        this.handleClearForm(e);
-        this.props.setCurrentPage(event, {page:'universities'});
-
+    handleNameChange(e){
+        this.setState({name:e.target.value}, () => console.log('name :', this.state.name));
     }
     handleDescriptionChange(e){
         this.setState({description:e.target.value}, () => console.log('description:', this.state.description));
     }
-
-
     handleTuitionChange(e) {
         const name = e.target.name;
         const value = e.target.value;
-        TuitionTmp[name] = value;
-        this.setState({tuition: TuitionTmp}, () => console.log('tuition:', this.state.tuition));
+        this.state.TuitionTmp[name] = value;
+        this.setState({tuition: this.state.TuitionTmp}, () => console.log('tuition:', this.state.tuition));
     }
-
-
     render(){
         return (
-
             <form className="container" onSubmit={this.handleFormSubmit}>
                 <h5> All inputs are required</h5>
-                <TextArea
-                    title={'Add a description for this domain'}
-                    rows={5}
-                    resize={false}
-                    content={this.state.description}
+                <SingleInput
+                    inputType={'text'}
+                    title={'name'}
+                    name={'name'}
+                    controlFunc={this.handleNameChange}
+                    content={this.state.name}
+                    placeholder={'Type the name of the domain'}/>
+                <SingleInput
+                    inputType={'text'}
+                    title={'description'}
                     name={'description'}
                     controlFunc={this.handleDescriptionChange}
-                    placeholder={'Please be thorough in your descriptions'} />
+                    content={this.state.description}
+                    placeholder={'Type the link of the description'}/>
 
                 <CheckboxOrRadioGroup
                     title={"Les langues d'enseignements"}
