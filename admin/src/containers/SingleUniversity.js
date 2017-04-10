@@ -7,7 +7,8 @@ import {Grid, Col, Row} from 'react-bootstrap'
 import DomainForm from '../containers/DomainForm'
 import {Button} from 'react-bootstrap'
 import {Modal} from 'react-bootstrap'
-
+import Domains from './Domains'
+import If from '../components/If'
 const styles = {
     divider: {
         margin: '8px 0',
@@ -45,7 +46,7 @@ const SingleUniversity = React.createClass({
                 <div className="U-info">
                     <Grid>
                         <Row className="show-grid">
-                            <Col xs={6} md={4}>
+                            <Col xs={6} md={6}>
                                 <span>ADRESSE</span>
                                 <h5 style={styles.divider}></h5>
                                 <div className="U-address infoLeft">
@@ -56,9 +57,9 @@ const SingleUniversity = React.createClass({
                                     </div>
                                 </div>
                             </Col>
-                            <Col xs={6} md={4}>
+                            <Col xs={6} md={6}>
                                 <span>INFOS</span>
-                                <h5 style={styles.divider}></h5>
+                                <div style={styles.divider}></div>
                                 <div className="U-links infoLeft">
                                     <p><strong> Languages </strong>: {university.selectedLanguages}</p>
                                     <p> Website : {university.website}</p>
@@ -69,24 +70,31 @@ const SingleUniversity = React.createClass({
                                     <p> Tuition amount : {university.tuition.amount}</p>
                                 </div>
                             </Col>
-                            <Col xs={6} md={4}>
-                                <span>DOMAINS</span>
-                                <h5 style={styles.divider}></h5>
-                                <div className="U-domains">
-                                    <div className="btnNewUniversity">
-                                        <Button bsStyle="primary"
-                                                bsSize="large"
-                                                className="pull-right"
-                                                onClick={this.open}
-                                                >
-                                            <span className="glyphicon glyphicon-plus"></span>
 
-                                        </Button>
-                                    </div>
+                        </Row>
+                        <Row className="show-grid">
+                            <Col xs={12} md={12}>
+                                <span>DOMAINS</span>
+                                <div className="btnNewUniversity">
+                                    <Button bsStyle="primary"
+                                            bsSize="small"
+                                            className="pull-right"
+                                            onClick={this.open}
+                                    >
+                                        <span className="glyphicon glyphicon-plus"></span>
+
+                                    </Button>
                                 </div>
-                                <Modal show={this.state.showModal} onHide={this.close}>
-                                    <DomainForm/>
-                                </Modal>
+                                <div className="U-domains">
+                                    <div style={styles.divider}></div>
+                                    <If items={university.domains}>
+                                        <Domains domains={university.domains}/>
+                                    </If>
+                                    <Modal show={this.state.showModal} onHide={this.close}>
+                                        <DomainForm domains={university.domains}/>
+                                    </Modal>
+                                </div>
+
                             </Col>
                         </Row>
                     </Grid>
