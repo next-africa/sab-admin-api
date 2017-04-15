@@ -107,7 +107,7 @@ func (suite *UniversityRepositoryTestSuite) TestGetAllUniversitiesGivenThereAreU
 func createUniversity(name string) university.University {
 	return university.University{
 		Name:            name,
-		Languages:       []university.Language{{"FR", "FRENCH"}, {"EN", "ENGLISH"}},
+		Languages:       []string{"en", "fr"},
 		Website:         "https://www.ulaval.ca",
 		ProgramListLink: "https://www.ulaval.ca/les-etudes.html",
 		Address: university.Address{
