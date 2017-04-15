@@ -7,7 +7,6 @@ import CheckboxOrRadioGroup from '../components/CheckboxOrRadioGroup'
 import Select from '../components/Select'
 var AddressTmp= {"line" :'', "city":'',"state":'', "code":''};
 var TuitionTmp = {"link":'', "amount":''} ;
-var id = 0;
 class UniversityForm extends Component {
     constructor(props) {
         super(props);
@@ -15,11 +14,11 @@ class UniversityForm extends Component {
             name: '',
             domains: '',
             languages: ['en','fr','de','es' ],
-            selectedLanguages: [],
+            selectedLanguages: ['fr'],
             website: '',
             programListLink: '',
             address: {line :'', city:'',state:'', code:''},
-            tuition: {"link":'', "amount":''},
+            tuition: {"link":'', "amount":0},
             showModal: false,
             countryCode:'',
             setCurrentPage :null
@@ -76,21 +75,36 @@ class UniversityForm extends Component {
         //Create University
         var colors = ['blue', 'purple', 'red', 'yellow'];
 
-        const formPayload= {
-            id:id++,
+        const formPayload = {
             name: this.state.name,
-            domains: this.state.domains,
-            selectedLanguages: this.state.selectedLanguages,
+            languages: this.state.selectedLanguages,
             website: this.state.website,
             programListLink: this.state.programListLink,
             address: this.state.address,
-            tuition: this.state.tuition,
-            color:("card-color "+colors[Math.floor((Math.random()*3)+1)]),
-            countryCode:this.state.countryCode
+            tuition: this.state.tuition
+            //color:("card-color "+colors[Math.floor((Math.random()*3)+1)]),
+            //countryCode:this.state.countryCode
 
         };
 
-        this.props.universitiesList.push(formPayload);
+        fetch("/api/countries/ca/universities", {
+            headers:{
+                'content-type': 'application/json'
+            },
+            method: "POST",
+            mode:"cors",
+            credentials: "same-origin",
+            body:JSON.stringify({
+                name:this.state.name,
+                languages:this.state.languages,
+                website: this.state.website,
+                programListLink:this.state.programListLink,
+                address:this.state.address,
+                tuition:this.state.tuition
+            })
+
+        });
+        console.log("formJson:", formPayload);
         console.log('TODO==> Post Request:', this.props.universitiesList)
         this.handleClearForm(e);
         this.props.setCurrentPage(event, {page:'universities'});
@@ -203,7 +217,7 @@ class UniversityForm extends Component {
                                     content={this.state.tuition['link']}
                                     placeholder={'Type the link'}/>
                                 <SingleInput
-                                    inputType={'text'}
+                                    inputType={'number'}
                                     title={'amount'}
                                     name={'amount'}
                                     controlFunc={this.handleTuitionChange}

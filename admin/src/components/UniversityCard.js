@@ -18,7 +18,7 @@ const UniversityCard = (props) =>(
                     </div>
                 </div>
                 <div className="clear"></div>
-                <div className="languages">{props.selectedLanguages.length} languages</div>
+                <div className="languages">{props.languages.length} languages</div>
             </div>
     </a>
 );

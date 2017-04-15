@@ -10,7 +10,6 @@ import NewUniversity from './Pages/NewUniversity';
 import ViewUniversity from './Pages/ViewUniversity';
 import Universities from './containers/Universities'
 import  Sidebar  from 'react-sidebar';
-var universitiesList = [];
 
 const App = React.createClass({
     getInitialState() {
@@ -25,26 +24,30 @@ const App = React.createClass({
             dragToggleDistance: 30,
             currentPage:'universities',
             currentPageProps:null,
-            currentPageId : 0
+            currentPageId : 0,
+            universitiesList: []
         };
 
+        this.currentPage = this.currentPage.bind(this);
+        this.setCurrentPage = this.setCurrentPage.bind(this);
     },
     componentDidMount(){
+        let that = this
         fetch("/api/countries/ca/universities", {
             headers:{
                 'content-type': 'application/json'
             },
             method: "GET",
-            mode:"same-origin",
+            mode:"cors",
             credentials: "same-origin"
+
         })
             .then((res) => res.json())
             .then(function(data){
-                console.log(data.data);
-                universitiesList : data.data
-            })
+                that.setState({universitiesList:data.data});
+                console.log("data",that.state.universitiesList)
 
-
+            }.bind(this))
     },
     setCurrentPage(event, { page, props , id}) {
         if (event) event.preventDefault();
@@ -52,11 +55,10 @@ const App = React.createClass({
     },
     currentPage() {
         return {
-
-            universities:<Universities universitiesList={universitiesList}/>,
-            universityForm: <UniversityForm universitiesList={universitiesList}/>,
-            newUniversity: <NewUniversity universitiesList={universitiesList}/>,
-            viewUniversity: <ViewUniversity universitiesList={universitiesList} currentPageId={this.state.currentPageId}/>,
+            universities:<Universities universitiesList={this.state.universitiesList}/>,
+            universityForm: <UniversityForm universitiesList={this.state.universitiesList}/>,
+            newUniversity: <NewUniversity universitiesList={this.state.universitiesList}/>,
+            viewUniversity: <ViewUniversity universitiesList={this.state.universitiesList} currentPageId={this.state.currentPageId}/>,
         }[this.state.currentPage];
     },
 
