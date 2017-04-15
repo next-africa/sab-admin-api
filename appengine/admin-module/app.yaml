@@ -4,6 +4,9 @@ handlers:
   script: _go_app
   url: /api/.*
 - login: admin
+  static_dir: static
+  url: /static
+- login: admin
   static_files: index.html
   upload: index.html
   url: /.*
