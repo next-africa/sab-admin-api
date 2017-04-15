@@ -65,3 +65,7 @@ Address.propTypes= {
 
 
 export default  Address;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1cbd5742b41158b8b7d05e0fb3d2e62f6c391d38

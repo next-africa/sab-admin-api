@@ -1516,6 +1516,7 @@ When you build the project, Create React App will place the `public` folder cont
 2. Install `serve` by running `npm install --save serve`.
 
 3. Add this line to `scripts` in `package.json`:
+<<<<<<< HEAD
 
     ```
     "now-start": "serve build/",
@@ -1527,6 +1528,19 @@ When you build the project, Create React App will place the `public` folder cont
     > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
     ```
 
+=======
+    
+    ```
+    "now-start": "serve build/",
+    ```
+    
+4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
+    
+    ```
+    > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
+    ```
+    
+>>>>>>> 1cbd5742b41158b8b7d05e0fb3d2e62f6c391d38
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
 Details are available in [this article.](https://zeit.co/blog/now-static)
