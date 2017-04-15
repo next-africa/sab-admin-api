@@ -29,6 +29,23 @@ const App = React.createClass({
         };
 
     },
+    componentDidMount(){
+        fetch("/api/countries/ca/universities", {
+            headers:{
+                'content-type': 'application/json'
+            },
+            method: "GET",
+            mode:"same-origin",
+            credentials: "same-origin"
+        })
+            .then((res) => res.json())
+            .then(function(data){
+                console.log(data.data);
+                universitiesList : data.data
+            })
+
+
+    },
     setCurrentPage(event, { page, props , id}) {
         if (event) event.preventDefault();
         this.setState({ currentPage: page, currentPageProps: props , currentPageId: id});
