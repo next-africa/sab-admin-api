@@ -2,6 +2,9 @@
 
 install: setup
 	go get google.golang.org/appengine
+	go get github.com/next-africa/mux
+	go get github.com/next-africa/context
+	go get github.com/next-africa/testify
 	pip install pyYaml
 
 config:

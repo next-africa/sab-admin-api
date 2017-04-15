@@ -1,0 +1,6 @@
+application: study-abroad-bot
+dispatch:
+- module: default
+  url: study-abroad-bot.appspot.com/
+- module: admin
+  url: study-abroad-bot.appspot.com/admin
