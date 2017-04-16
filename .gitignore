@@ -11,3 +11,5 @@ pkg/*
 
 secrets.json
 node_modules/
+
+*.log
