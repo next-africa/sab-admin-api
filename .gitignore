@@ -10,3 +10,4 @@ pkg/*
 !src/sab.com
 
 secrets.json
+node_modules/
