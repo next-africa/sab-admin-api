@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, {Component} from 'react';
 import '../node_modules/spectre.css/dist/spectre.min.css';
 import './App.css';
 import { Grid } from 'react-bootstrap';
@@ -11,9 +11,10 @@ import ViewUniversity from './Pages/ViewUniversity';
 import Universities from './containers/Universities'
 import  Sidebar  from 'react-sidebar';
 
-const App = React.createClass({
-    getInitialState() {
-        return {
+class App extends Component{
+    constructor(props){
+        super(props);
+        this.state= {
             docked: true,
             open: false,
             transitions: true,
@@ -26,11 +27,19 @@ const App = React.createClass({
             currentPageProps:null,
             currentPageId : 0,
             universitiesList: []
-        };
+        }
 
-        this.currentPage = this.currentPage.bind(this);
-        this.setCurrentPage = this.setCurrentPage.bind(this);
-    },
+
+    this.currentPage = this.currentPage.bind(this);
+    this.setCurrentPage = this.setCurrentPage.bind(this);
+    this.onSetDocked = this.onSetDocked.bind(this);
+    this.toggleOpen = this.toggleOpen.bind(this);
+    this.toggleDocked = this.toggleDocked.bind(this);
+    this.generateItem = this.generateItem.bind(this);
+
+
+
+    };
     componentDidMount(){
         let that = this
         fetch("/api/countries/ca/universities", {
@@ -48,11 +57,11 @@ const App = React.createClass({
                 console.log("data",that.state.universitiesList)
 
             }.bind(this))
-    },
+    }
     setCurrentPage(event, { page, props , id}) {
         if (event) event.preventDefault();
         this.setState({ currentPage: page, currentPageProps: props , currentPageId: id});
-    },
+    }
     currentPage() {
         return {
             universities:<Universities universitiesList={this.state.universitiesList}/>,
@@ -60,50 +69,44 @@ const App = React.createClass({
             newUniversity: <NewUniversity universitiesList={this.state.universitiesList}/>,
             viewUniversity: <ViewUniversity universitiesList={this.state.universitiesList} currentPageId={this.state.currentPageId}/>,
         }[this.state.currentPage];
-    },
+    }
 
     componentWillMount() {
         const mql = window.matchMedia(`(min-width: 800px)`);
         mql.addListener(this.mediaQueryChanged);
         this.setState({mql: mql, docked: mql.matches});
-    },
+    }
 
     componentWillUnmount() {
         this.state.mql.removeListener(this.mediaQueryChanged);
-    },
+    }
 
     onSetOpen(open) {
         this.setState({open: open});
-    },
-    onSetDocket(docked) {
+    }
+    onSetDocked(docked) {
         this.setState({docked: !docked});
-    },
+    }
 
     mediaQueryChanged() {
         this.setState({docked: this.state.mql.matches});
-    },
+    }
 
-    toggleOpen(ev) {
+    toggleOpen(e) {
+        e.preventDefault();
         this.setState({open: !this.state.open});
-
-        if (ev) {
-            ev.preventDefault();
-        }
-    },
-    toggleDocked(ev) {
+    }
+    toggleDocked(e) {
+        e.preventDefault();
         this.setState({docked: !this.state.docked});
-
-        if (ev) {
-            ev.preventDefault();
-        }
-    },
-    generateItem : function(item){
+    }
+    generateItem(item){
         return <NavBarItem controlFunc={this.toggleDocked}style={item.style} key={item.key} text={item.text} url={item.url}/>
-    },
-    generateUserInfos: function(infos){
+    }
+    generateUserInfos(infos){
         return <NavBarItem style={infos.style} key={infos.key} text={infos.text} url={infos.url}/>
 
-    },
+    }
 
     render() {
         const data =  [
@@ -187,7 +190,7 @@ const App = React.createClass({
             </Sidebar>
         );
     }
- });
+ };
 //App.propTypes = {
     //children: React.propTypes.node,
 //}

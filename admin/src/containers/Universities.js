@@ -11,13 +11,16 @@ var app =  {};
 app.dirty = false;
 
 // The card manager/holder.
-var CardManager = React.createClass({
-    getInitialState: function() {
-        return {universities: []};
-    },
-
+class CardManager  extends React.Component{
+    constructor(props)
+    {
+        super(props)
+        this.state = {
+            universities: []
+        }
+    }
     // When our component mounts we should update the universities with the initial ones.
-    componentDidMount: function() {
+    componentDidMount() {
         var _self = this;
         this.setState({universities: this.props.universitiesList});
 
@@ -28,11 +31,11 @@ var CardManager = React.createClass({
                 _self.setState({universities: this.props.universitiesList});
             }
         }, 500);
-    },
+    }
 
 
     // Render our cycle of universities.
-    render: function() {
+    render() {
         return (
 
             <div className="card-cycle">
@@ -40,7 +43,7 @@ var CardManager = React.createClass({
             </div>
         );
     }
-});
+};
 
 var If = React.createClass({
     render:function(){

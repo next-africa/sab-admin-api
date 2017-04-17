@@ -5,8 +5,6 @@ import React, {Component} from 'react';
 import SingleInput from '../components/SingleInput'
 import CheckboxOrRadioGroup from '../components/CheckboxOrRadioGroup'
 import Select from '../components/Select'
-var AddressTmp= {"line" :'', "city":'',"state":'', "code":''};
-var TuitionTmp = {"link":'', "amount":''} ;
 class UniversityForm extends Component {
     constructor(props) {
         super(props);
@@ -17,8 +15,12 @@ class UniversityForm extends Component {
             selectedLanguages: ['fr'],
             website: '',
             programListLink: '',
-            address: {line :'', city:'',state:'', code:''},
-            tuition: {"link":'', "amount":0},
+            addressLine :'',
+            addressCity:'',
+            addressState:'',
+            addressCode:'',
+            tuitionLink: '',
+            tuitionAmount: 0,
             showModal: false,
             countryCode:'',
             setCurrentPage :null
@@ -32,8 +34,12 @@ class UniversityForm extends Component {
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handleProgramListLink = this.handleProgramListLink.bind(this);
         this.handleUniversityNameChange = this.handleUniversityNameChange.bind(this);
-        this.handleAddressChange = this.handleAddressChange.bind(this);
-        this.handleTuitionChange = this.handleTuitionChange.bind(this);
+        this.handleAddressLineChange = this.handleAddressLineChange.bind(this);
+        this.handleAddressCityChange = this.handleAddressCityChange.bind(this);
+        this.handleAddressStateChange = this.handleAddressStateChange.bind(this);
+        this.handleAddressCodeChange = this.handleAddressCodeChange.bind(this);
+        this.handleTuitionAmountChange = this.handleTuitionAmountChange.bind(this);
+        this.handleTuitionLinkChange = this.handleTuitionLinkChange.bind(this);
     }
 
     setCurrentPage(event, { page, props }) {
@@ -72,9 +78,6 @@ class UniversityForm extends Component {
 
     handleFormSubmit(e){
         e.preventDefault();
-        //Create University
-        var colors = ['blue', 'purple', 'red', 'yellow'];
-
         const formPayload = {
             name: this.state.name,
             languages: this.state.selectedLanguages,
@@ -82,11 +85,8 @@ class UniversityForm extends Component {
             programListLink: this.state.programListLink,
             address: this.state.address,
             tuition: this.state.tuition
-            //color:("card-color "+colors[Math.floor((Math.random()*3)+1)]),
-            //countryCode:this.state.countryCode
 
         };
-
         fetch("/api/countries/ca/universities", {
             headers:{
                 'content-type': 'application/json'
@@ -116,18 +116,24 @@ class UniversityForm extends Component {
     handleUniversityNameChange(e){
         this.setState({name: e.target.value}, () => console.log('University name:', this.state.name));
     }
-    handleAddressChange(e) {
-        const name = e.target.name;
-        const value = e.target.value;
-        AddressTmp[name] = value;
-        this.setState({address: AddressTmp}, () => console.log('address:', this.state.address));
+    handleAddressCityChange(e) {
+        this.setState({addressCity: e.target.value}, () => console.log('City:', this.state.addressCity));
+    }
+    handleAddressLineChange(e) {
+        this.setState({addressLine: e.target.value}, () => console.log('Line:', this.state.addressLine));
+    }
+    handleAddressStateChange(e) {
+        this.setState({addressstate: e.target.value}, () => console.log('state:', this.state.addressState));
+    }
+    handleAddressCodeChange(e) {
+        this.setState({addressCode: e.target.value}, () => console.log('Code:', this.state.addressCode));
+    }
+    handleTuitionAmountChange(e){
+        this.setState({tuitionAmount:e.target.value}, () => console.log('tuitionAmount:', this.state.tuitionAmount));
     }
 
-    handleTuitionChange(e) {
-        const name = e.target.name;
-        const value = e.target.value;
-        TuitionTmp[name] = value;
-        this.setState({tuition: TuitionTmp}, () => console.log('tuition:', this.state.tuition));
+    handleTuitionLinkChange(e) {
+        this.setState({tuitionLink:e.target.value}, () => console.log('tuitionAmount:', this.state.tuitionLink));
     }
 
 
@@ -177,31 +183,31 @@ class UniversityForm extends Component {
                                 inputType={'text'}
                                 title={'line'}
                                 name={'line'}
-                                controlFunc={this.handleAddressChange}
-                                content={this.state.address['line']}
+                                controlFunc={this.handleAddressLineChange}
+                                content={this.state.addressLine}
                                 placeholder={'Type the line'}/>
                             <SingleInput
                                 inputType={'text'}
                                 title={'city'}
                                 name={'city'}
-                                controlFunc={this.handleAddressChange}
-                                content={this.state.address['city']}
+                                controlFunc={this.handleAddressCityChange}
+                                content={this.state.addressCity}
                                 placeholder={'Type the city'}/>
 
                             <SingleInput
                                 inputType={'text'}
                                 title={'state'}
                                 name={'state'}
-                                controlFunc={this.handleAddressChange}
-                                content={this.state.address['state']}
+                                controlFunc={this.handleAddressStateChange}
+                                content={this.state.addressState}
                                 placeholder={'Type the state'}/>
 
                             <SingleInput
                                 inputType={'text'}
                                 title={'code'}
                                 name={'code'}
-                                controlFunc={this.handleAddressChange}
-                                content={this.state.address['code']}
+                                controlFunc={this.handleAddressCodeChange}
+                                content={this.state.addressCode}
                                 placeholder={'Type the Postal code'}/>
                         </div>
                         </div>
@@ -213,15 +219,15 @@ class UniversityForm extends Component {
                                     inputType={'text'}
                                     title={'link'}
                                     name={'link'}
-                                    controlFunc={this.handleTuitionChange}
-                                    content={this.state.tuition['link']}
+                                    controlFunc={this.handleTuitionLinkChange}
+                                    content={this.state.tuitionLink}
                                     placeholder={'Type the link'}/>
                                 <SingleInput
                                     inputType={'number'}
                                     title={'amount'}
                                     name={'amount'}
-                                    controlFunc={this.handleTuitionChange}
-                                    content={this.state.tuition['amount']}
+                                    controlFunc={this.handleTuitionAmountChange}
+                                    content={this.state.tuitionAmount}
                                     placeholder={'Type the amount'}/>
                             </div>
                         </div>
