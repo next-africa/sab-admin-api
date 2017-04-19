@@ -56,7 +56,7 @@ class App extends Component{
                 that.setState({universitiesList:data.data});
                 console.log("data",that.state.universitiesList)
 
-            }.bind(this))
+            })
     }
     setCurrentPage(event, { page, props , id}) {
         if (event) event.preventDefault();

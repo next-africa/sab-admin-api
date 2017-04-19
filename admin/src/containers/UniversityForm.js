@@ -71,8 +71,8 @@ class UniversityForm extends Component {
             selectedLanguages: [],
             website: '',
             programListLink: '',
-            address:{},
-            tuition: {}
+            address: {line :'', city:'',state:'', code:''},
+            tuition: {link:'', amount:''},
         });
     }
 
@@ -87,7 +87,10 @@ class UniversityForm extends Component {
             tuition: this.state.tuition
 
         };
-        fetch("/api/countries/ca/universities", {
+
+        console.log(this.state.countryCode);
+        fetch("/api/countries/"+this.state.countryCode+"/universities", {
+
             headers:{
                 'content-type': 'application/json'
             },
@@ -99,16 +102,17 @@ class UniversityForm extends Component {
                 languages:this.state.languages,
                 website: this.state.website,
                 programListLink:this.state.programListLink,
-                address:this.state.address,
-                tuition:this.state.tuition
+                address: {
+
+                },
+                tuition:{
+                }
             })
 
         });
-        console.log("formJson:", formPayload);
         console.log('TODO==> Post Request:', this.props.universitiesList)
         this.handleClearForm(e);
         this.props.setCurrentPage(event, {page:'universities'});
-
     }
     handleProgramListLink(e){
         this.setState({programListLink:e.target.value}, () => console.log('Program list link :', this.state.programListLink));
@@ -123,7 +127,7 @@ class UniversityForm extends Component {
         this.setState({addressLine: e.target.value}, () => console.log('Line:', this.state.addressLine));
     }
     handleAddressStateChange(e) {
-        this.setState({addressstate: e.target.value}, () => console.log('state:', this.state.addressState));
+        this.setState({addressState: e.target.value}, () => console.log('state:', this.state.addressState));
     }
     handleAddressCodeChange(e) {
         this.setState({addressCode: e.target.value}, () => console.log('Code:', this.state.addressCode));
@@ -139,6 +143,7 @@ class UniversityForm extends Component {
 
     render(){
         return (
+
                     <form className="container" onSubmit={this.handleFormSubmit}>
                         <h5> All inputs are required</h5>
                         <Select
@@ -152,7 +157,7 @@ class UniversityForm extends Component {
                             title={'University name'}
                             name={'name'}
                             controlFunc={this.handleUniversityNameChange}
-                            content={this.state.universityName}
+                            content={this.state.name}
                             placeholder={'Type the name of the university'}/>
                         <SingleInput
                             inputType={'text'}
