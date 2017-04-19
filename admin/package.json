@@ -1,0 +1,29 @@
+{
+  "name": "admin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "express": "^4.15.2",
+    "gulp": "^3.9.1",
+    "gulp-shell": "^0.6.3",
+    "gulp-watch": "^4.3.11",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-native-navbar": "^1.6.3",
+    "react-native-web": "^0.0.80",
+    "react-router": "^4.0.0",
+    "react-router-dom": "^4.0.0",
+    "react-sidebar": "^2.3.0",
+    "spectre.css": "^0.1.27"
+  },
+  "devDependencies": {
+    "react-bootstrap": "^0.30.8",
+    "react-scripts": "0.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && gulp copyBuildFolder",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

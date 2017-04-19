@@ -2,7 +2,7 @@
 *.pyc
 .idea/*
 .cache/
-
+bin/*
 src/*
 pkg/*
 
@@ -10,3 +10,6 @@ pkg/*
 !src/sab.com
 
 secrets.json
+node_modules/
+
+*.log
