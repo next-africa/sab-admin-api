@@ -78,18 +78,19 @@ class UniversityForm extends Component {
 
     handleFormSubmit(e){
         e.preventDefault();
-        const formPayload = {
-            name: this.state.name,
-            languages: this.state.selectedLanguages,
-            website: this.state.website,
-            programListLink: this.state.programListLink,
-            address: this.state.address,
-            tuition: this.state.tuition
-
+        const address = {
+            line:this.state.addressLine,
+            state:this.state.addressState,
+            city: this.state.addressCity,
+            postalCode: this.state.addressCode
         };
+        const tuition = {
+            link: this.state.tuitionLink,
+            amount: this.state.tuitionAmount
+        }
 
         console.log(this.state.countryCode);
-        fetch("/api/countries/"+this.state.countryCode+"/universities", {
+        fetch("/api/countries/ca/universities", {
 
             headers:{
                 'content-type': 'application/json'
@@ -102,11 +103,9 @@ class UniversityForm extends Component {
                 languages:this.state.languages,
                 website: this.state.website,
                 programListLink:this.state.programListLink,
-                address: {
+                address: address,
+                tuition: tuition,
 
-                },
-                tuition:{
-                }
             })
 
         });
@@ -133,7 +132,7 @@ class UniversityForm extends Component {
         this.setState({addressCode: e.target.value}, () => console.log('Code:', this.state.addressCode));
     }
     handleTuitionAmountChange(e){
-        this.setState({tuitionAmount:e.target.value}, () => console.log('tuitionAmount:', this.state.tuitionAmount));
+        this.setState({tuitionAmount:parseInt(e.target.value)}, () => console.log('tuitionAmount:', this.state.tuitionAmount));
     }
 
     handleTuitionLinkChange(e) {
