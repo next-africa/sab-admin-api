@@ -4,10 +4,17 @@
 import React from 'react'
 import UniversityPreview from '../components/UniversityPreview'
 import {Button} from 'react-bootstrap'
+import If from '../components/If'
 var app =  {};
 
 // Some initial universities to start with.
-
+const styles = {
+    divider: {
+        margin: '8px 0',
+        height: 1,
+        backgroundColor: '#757575',
+    },
+}
 app.dirty = false;
 
 // The card manager/holder.
@@ -45,16 +52,7 @@ class CardManager  extends React.Component{
     }
 };
 
-var If = React.createClass({
-    render:function(){
-        if(this.props.numberOfUniversities){
-            return this.props.children;
-        }
-        else{
-            return false;
-        }
-    }
-});
+
 // The card application.
 const Universities =(props) => (
 
@@ -70,7 +68,9 @@ const Universities =(props) => (
                         </Button>
                     </div>
                     <h3>Universities</h3>
-                    <If numberOfUniversities={props.universitiesList.length}>
+                    <div style={styles.divider}></div>
+
+                    <If items={props.universitiesList}>
 
                         <CardManager  universitiesList={props.universitiesList} setCurrentPage={props.setCurrentPage}/>
                     </If>
