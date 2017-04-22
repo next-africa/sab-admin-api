@@ -3,9 +3,16 @@ handlers:
 - login: admin
   script: _go_app
   url: /api/.*
-- login: admingit
+- login: admin
+  script: _go_app
+  url: /graphql
+- login: admin
   static_dir: static
   url: /static
+- login: admin
+  static_files: graphiql.html
+  upload: graphiql.html
+  url: /graphiql
 - login: admin
   static_files: index.html
   upload: index.html

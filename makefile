@@ -2,9 +2,12 @@
 
 install: setup
 	go get google.golang.org/appengine
-	go get github.com/gorilla/mux
-	go get github.com/gorilla/context
-	go get github.com/stretchr/testify
+	go get github.com/next-africa/mux
+	go get github.com/next-africa/context
+	go get github.com/next-africa/testify
+	go get github.com/next-africa/graphql-go
+    go get github.com/next-africa/graphql-go-handler
+    go get github.com/next-africa/graphql-go-relay
 	pip install pyYaml
 
 config:
