@@ -6,8 +6,8 @@ install: setup
 	go get github.com/next-africa/context
 	go get github.com/next-africa/testify
 	go get github.com/next-africa/graphql-go
-    go get github.com/next-africa/graphql-go-handler
-    go get github.com/next-africa/graphql-go-relay
+	go get github.com/next-africa/graphql-go-handler
+	go get github.com/next-africa/graphql-go-relay
 	pip install pyYaml
 
 config:
