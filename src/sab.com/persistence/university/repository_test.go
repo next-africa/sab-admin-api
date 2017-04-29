@@ -2,6 +2,7 @@ package university
 
 import (
 	"context"
+	"fmt"
 	"github.com/stretchr/testify/suite"
 	"google.golang.org/appengine/datastore"
 	"sab.com/domain/university"
@@ -102,6 +103,31 @@ func (suite *UniversityRepositoryTestSuite) TestGetAllUniversitiesGivenThereAreU
 
 	suite.NoError(err)
 	suite.Contains(universities, university1, university2)
+}
+
+func (suite *UniversityRepositoryTestSuite) TestHasUniversityGiven() {
+	university1 := createUniversity("Laval University")
+	suite.repository.Save(&university1, COUNTRY_CODE)
+	var fakeId int64 = 4
+
+	time.Sleep(100 * time.Millisecond)
+
+	testCases := []struct {
+		universityId int64
+		countryCode  string
+		expected     bool
+		msg          string
+	}{
+		{universityId: university1.Id, countryCode: COUNTRY_CODE, expected: true, msg: fmt.Sprintf("HasUniversity with id %d and country code %s should return true", university1.Id, COUNTRY_CODE)},
+		{countryCode: COUNTRY_CODE, expected: false, msg: "HasUniversity with null id  should return false"},
+		{universityId: fakeId, countryCode: COUNTRY_CODE, expected: false, msg: "HasUniversity with non existent id should return false"},
+	}
+
+	for _, testCase := range testCases {
+		result, err := suite.repository.HasUniversity(testCase.universityId, testCase.countryCode)
+		suite.NoError(err)
+		suite.Equal(testCase.expected, result, testCase.msg)
+	}
 }
 
 func createUniversity(name string) university.University {

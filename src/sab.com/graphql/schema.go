@@ -79,6 +79,7 @@ func createSchema(countryService *country.CountryService, universityService *uni
 		Fields: graphql.Fields{
 			"createCountry":    countrySchema.GetCreateCountryMutation(),
 			"createUniversity": universitySchema.GetCreateUniversityMutation(),
+			"updateUniversity": universitySchema.GetUpdateUniversityMutation(),
 		},
 	})
 

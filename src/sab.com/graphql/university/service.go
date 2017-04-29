@@ -77,6 +77,10 @@ func (graphqlService *UniversityGraphService) GetAllUniversities(countryCode str
 	}
 }
 
-func (graphqlService *UniversityGraphService) SaveUniversity(university *university.University, countryCode string) error {
-	return graphqlService.universityService.SaveUniversity(university, countryCode)
+func (graphqlService *UniversityGraphService) CreateUniversity(university *university.University, countryCode string) error {
+	return graphqlService.universityService.CreateUniversity(university, countryCode)
+}
+
+func (graphqlService *UniversityGraphService) UpdateUniversity(university *university.University, countryCode string) error {
+	return graphqlService.universityService.UpdateUniversity(university, countryCode)
 }

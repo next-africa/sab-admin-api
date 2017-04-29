@@ -35,7 +35,7 @@ func HandleCreateUniversity(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	if err := universityService.SaveUniversity(&newUniversity, countryCode); err != nil {
+	if err := universityService.CreateUniversity(&newUniversity, countryCode); err != nil {
 		var errorString string
 		if err == country.CountryNotFoundError || err == university.UniversityNotFoundError {
 			errorString = err.Error()

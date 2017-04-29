@@ -56,9 +56,7 @@ func (repository universityRepository) GetById(id int64, countryCode string) (un
 
 	var universityToReturn university.University
 
-	countryKey := datastore.NewKey(gaeContext, country.COUNTRY_KIND, countryCode, 0, nil)
-
-	universityKey := datastore.NewKey(gaeContext, UNIVERSITY_KIND, "", id, countryKey)
+	universityKey := repository.getUniversityKey(id, countryCode)
 
 	if err := datastore.Get(gaeContext, universityKey, &universityToReturn); err != nil {
 		if err == datastore.ErrNoSuchEntity {
@@ -70,4 +68,23 @@ func (repository universityRepository) GetById(id int64, countryCode string) (un
 	universityToReturn.Id = id
 
 	return universityToReturn, nil
+}
+
+func (repository universityRepository) getUniversityKey(universityId int64, countryCode string) *datastore.Key {
+	gaeContext := repository.contextStore.GetContext()
+	countryKey := datastore.NewKey(gaeContext, country.COUNTRY_KIND, countryCode, 0, nil)
+
+	return datastore.NewKey(gaeContext, UNIVERSITY_KIND, "", universityId, countryKey)
+}
+
+func (repository universityRepository) HasUniversity(id int64, countryCode string) (bool, error) {
+	gaeContext := repository.contextStore.GetContext()
+
+	universityKey := repository.getUniversityKey(id, countryCode)
+
+	var dst []university.University
+
+	q, err := datastore.NewQuery(UNIVERSITY_KIND).Filter("__key__ =", universityKey).KeysOnly().GetAll(gaeContext, dst)
+
+	return q != nil, err
 }

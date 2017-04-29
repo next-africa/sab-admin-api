@@ -11,7 +11,7 @@ func NewUniversityService(universityRepository UniversityRepository, countryRepo
 	return UniversityService{universityRepository, countryRepository}
 }
 
-func (service *UniversityService) SaveUniversity(theUniversity *University, countryCode string) error {
+func (service *UniversityService) CreateUniversity(theUniversity *University, countryCode string) error {
 	if countryWithCodeExists, err := service.countryRepository.HasCountryWithCode(countryCode); err != nil {
 		return err
 	} else {
@@ -19,6 +19,18 @@ func (service *UniversityService) SaveUniversity(theUniversity *University, coun
 			return service.universityRepository.Save(theUniversity, countryCode)
 		} else {
 			return country.CountryNotFoundError
+		}
+	}
+}
+
+func (service *UniversityService) UpdateUniversity(theUniversity *University, countryCode string) error {
+	if universityExists, err := service.universityRepository.HasUniversity(theUniversity.Id, countryCode); err != nil {
+		return err
+	} else {
+		if universityExists {
+			return service.universityRepository.Save(theUniversity, countryCode)
+		} else {
+			return UniversityNotFoundError
 		}
 	}
 }
