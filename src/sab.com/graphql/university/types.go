@@ -1,6 +1,6 @@
 package graphql
 
-import "github.com/next-africa/graphql-go"
+import "github.com/graphql-go/graphql"
 
 var AddressType = graphql.NewObject(graphql.ObjectConfig{
 	Name:        "Address",

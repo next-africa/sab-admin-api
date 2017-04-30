@@ -2,8 +2,8 @@ package graphql
 
 import (
 	"errors"
-	"github.com/next-africa/graphql-go"
-	"github.com/next-africa/graphql-go-relay"
+	"github.com/graphql-go/graphql"
+	"github.com/graphql-go/relay"
 	"golang.org/x/net/context"
 	"sab.com/domain/university"
 	"strconv"

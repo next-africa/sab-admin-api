@@ -1,13 +1,7 @@
 .PHONY: install setup config
 
 install: setup
-	go get google.golang.org/appengine
-	go get github.com/next-africa/mux
-	go get github.com/next-africa/context
-	go get github.com/next-africa/testify
-	go get github.com/next-africa/graphql-go
-	go get github.com/next-africa/graphql-go-handler
-	go get github.com/next-africa/graphql-go-relay
+	go get -u github.com/kardianos/govendor
 	pip install pyYaml
 
 config:

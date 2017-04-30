@@ -3,7 +3,6 @@ package admin_module
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
-	"github.com/next-africa/graphql-go-handler"
 	"google.golang.org/appengine"
 	"net/http"
 	"sab.com/api"
@@ -37,7 +36,7 @@ func writeApiResponse(writer http.ResponseWriter, response api.ApiResponse, stat
 }
 
 type AppengineGraphqlHandler struct {
-	h *handler.Handler
+	h *graphql.GraphqlHandler
 }
 
 func (graphqlHandler AppengineGraphqlHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -55,8 +54,5 @@ func init() {
 	router.HandleFunc("/api/countries/{countryCode}/universities/{id:[0-9]+}", withContext(HandleGetUniversity)).Methods("GET")
 
 	http.Handle("/api/", router)
-	http.Handle("/graphql", AppengineGraphqlHandler{handler.New(&handler.Config{
-		Schema: graphql.GetSabGraphqlSchema(GetCountryService(), GetUniversityService()),
-		Pretty: true,
-	})})
+	http.Handle("/graphql", AppengineGraphqlHandler{graphql.GetGraphqlHandler(GetCountryService(), GetUniversityService())})
 }

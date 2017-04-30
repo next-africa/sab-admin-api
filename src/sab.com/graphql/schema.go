@@ -2,9 +2,11 @@ package graphql
 
 import (
 	"errors"
-	"github.com/next-africa/graphql-go"
-	"github.com/next-africa/graphql-go-relay"
+	"github.com/graphql-go/graphql"
+	"github.com/graphql-go/handler"
+	"github.com/graphql-go/relay"
 	"golang.org/x/net/context"
+	"net/http"
 	"sab.com/domain/country"
 	"sab.com/domain/university"
 	graphqlCountry "sab.com/graphql/country"
@@ -19,7 +21,22 @@ var schema *graphql.Schema
 var countrySchema *graphqlCountry.CountrySchema
 var universitySchema *graphqlUniversity.UniversitySchema
 
-func GetSabGraphqlSchema(countryService *country.CountryService, universityService *university.UniversityService) *graphql.Schema {
+type GraphqlHandler struct {
+	h *handler.Handler
+}
+
+func (graphqlHandler GraphqlHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	graphqlHandler.h.ServeHTTP(w, r)
+}
+
+func GetGraphqlHandler(countryService *country.CountryService, universityService *university.UniversityService) *GraphqlHandler {
+	return &GraphqlHandler{handler.New(&handler.Config{
+		Schema: getSabGraphqlSchema(countryService, universityService),
+		Pretty: true,
+	})}
+}
+
+func getSabGraphqlSchema(countryService *country.CountryService, universityService *university.UniversityService) *graphql.Schema {
 	if schema == nil {
 		var err error
 		schema, err = createSchema(countryService, universityService)

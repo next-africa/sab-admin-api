@@ -17,5 +17,7 @@ handlers:
   static_files: index.html
   upload: index.html
   url: /.*
+nobuild_files:
+- vendor
 runtime: go
 service: admin
