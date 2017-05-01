@@ -1,7 +1,6 @@
 package graphql
 
 import (
-	"encoding/base64"
 	"errors"
 	"fmt"
 	"sab.com/domain/university"
@@ -22,11 +21,13 @@ func NewUniversityGraphqlService(universityService *university.UniversityService
 	return UniversityGraphService{universityService: universityService}
 }
 
-func (graphqlService *UniversityGraphService) NewUniversityNodeFromUniversity(aUniversity *university.University, countryCode string) UniversityNode {
-	id := fmt.Sprintf("%s:%s:%s", "University", countryCode, aUniversity.Id)
-	id = base64.StdEncoding.EncodeToString([]byte(id))
+func ComputeUniversityGlobalId(countryCode string, universityId int64) (globalId string) {
+	globalId = fmt.Sprintf("%s:%v", countryCode, universityId)
+	return
+}
 
-	return UniversityNode{id, aUniversity}
+func (graphqlService *UniversityGraphService) NewUniversityNodeFromUniversity(aUniversity *university.University, countryCode string) UniversityNode {
+	return UniversityNode{ComputeUniversityGlobalId(countryCode, aUniversity.Id), aUniversity}
 }
 
 func (graphqlService *UniversityGraphService) mapUniversitiesToUniversityNodes(universities []university.University, countryCode string) []UniversityNode {
@@ -38,20 +39,18 @@ func (graphqlService *UniversityGraphService) mapUniversitiesToUniversityNodes(u
 }
 
 func (graphqlService *UniversityGraphService) GetUniversityByGlobalId(encodedGlobalId string) (UniversityNode, error) {
-	if decoded, err := base64.StdEncoding.DecodeString(encodedGlobalId); err != nil {
-		return UniversityNode{}, err
-	} else {
-		idParts := strings.Split(string(decoded), ":")
 
-		if len(idParts) != 3 {
-			return UniversityNode{}, errors.New("Invalid global university Id, the country relay Id should be of the form University:{countryCode}:{universityId}")
-		}
+	idParts := strings.Split(encodedGlobalId, ":")
 
-		countryCode := idParts[1]
-		universityId := idParts[2]
-
-		return graphqlService.GetUniversityNodeByCountryCodeAndUniversityId(universityId, countryCode)
+	if len(idParts) != 2 {
+		return UniversityNode{}, errors.New("Invalid global university Id, the country relay Id should be of the form University:{countryCode}:{universityId}")
 	}
+
+	countryCode := idParts[0]
+	universityId := idParts[1]
+
+	return graphqlService.GetUniversityNodeByCountryCodeAndUniversityId(universityId, countryCode)
+
 }
 
 func (graphqlService *UniversityGraphService) GetUniversityNodeByCountryCodeAndUniversityId(universityIdString string, countryCode string) (UniversityNode, error) {

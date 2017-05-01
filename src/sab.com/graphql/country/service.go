@@ -1,11 +1,7 @@
 package graphql
 
 import (
-	"encoding/base64"
-	"errors"
-	"fmt"
 	"sab.com/domain/country"
-	"strings"
 )
 
 type CountryNode struct {
@@ -23,33 +19,18 @@ func NewCountryGraphqlService(countryService *country.CountryService) CountryGra
 
 func (graphqlService *CountryGraphService) mapCountriesToCountryNodes(countries []country.Country) []CountryNode {
 	countriesMap := make([]CountryNode, len(countries))
-	for i, v := range countries {
-		countriesMap[i] = graphqlService.NewCountryNodeFromCountry(&v)
+	for i := range countries {
+		countriesMap[i] = graphqlService.NewCountryNodeFromCountry(&countries[i])
 	}
 	return countriesMap
 }
 
 func (graphqlService *CountryGraphService) NewCountryNodeFromCountry(aCountry *country.Country) CountryNode {
-	id := fmt.Sprintf("%s:%s", "Country", aCountry.Code)
-	id = base64.StdEncoding.EncodeToString([]byte(id))
-
-	return CountryNode{id, aCountry}
+	return CountryNode{aCountry.Code, aCountry}
 }
 
-func (graphqlService *CountryGraphService) GetCountryByGlobalId(encodedGlobalId string) (CountryNode, error) {
-	if decoded, err := base64.StdEncoding.DecodeString(encodedGlobalId); err != nil {
-		return CountryNode{}, err
-	} else {
-		idParts := strings.Split(string(decoded), ":")
-
-		if len(idParts) != 2 {
-			return CountryNode{}, errors.New("Invalid global country Id, the country relay Id should be of the form Country:{countryCode}")
-		}
-
-		code := idParts[1]
-
-		return graphqlService.GetCountryNodeByCode(code)
-	}
+func (graphqlService *CountryGraphService) GetCountryByGlobalId(code string) (CountryNode, error) {
+	return graphqlService.GetCountryNodeByCode(code)
 }
 
 func (graphqlService *CountryGraphService) GetCountryNodeByCode(code string) (CountryNode, error) {
