@@ -1,6 +1,14 @@
 package graphql
 
-import "github.com/graphql-go/graphql"
+import (
+	"github.com/graphql-go/graphql"
+	"sab.com/domain/university"
+)
+
+type UniversityNode struct {
+	Id         string                 `json:"id"`
+	Properties *university.University `json:"properties"`
+}
 
 var AddressType = graphql.NewObject(graphql.ObjectConfig{
 	Name:        "Address",

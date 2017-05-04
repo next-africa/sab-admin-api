@@ -9,8 +9,6 @@ import (
 	"net/http"
 	"sab.com/domain/country"
 	"sab.com/domain/university"
-	graphqlCountry "sab.com/graphql/country"
-	graphqlUniversity "sab.com/graphql/university"
 )
 
 var nodeDefinitions *relay.NodeDefinitions
@@ -18,8 +16,8 @@ var nodeDefinitions *relay.NodeDefinitions
 // exported schema, defined in init()
 var schema *graphql.Schema
 
-var countrySchema *graphqlCountry.CountrySchema
-var universitySchema *graphqlUniversity.UniversitySchema
+var countrySchema *CountrySchema
+var universitySchema *UniversitySchema
 
 type GraphqlHandler struct {
 	h *handler.Handler
@@ -68,7 +66,7 @@ func createSchema(countryService *country.CountryService, universityService *uni
 		TypeResolve: func(p graphql.ResolveTypeParams) *graphql.Object {
 			// based on the type of the value, return GraphQLObjectType
 			switch p.Value.(type) {
-			case graphqlUniversity.UniversityNode:
+			case UniversityNode:
 				return universitySchema.GetUniversityType()
 			default:
 				return countrySchema.GetCountryType()
@@ -76,8 +74,8 @@ func createSchema(countryService *country.CountryService, universityService *uni
 		},
 	})
 
-	countrySchema = graphqlCountry.NewCountrySchema(countryService, nodeDefinitions)
-	universitySchema = graphqlUniversity.NewUniversitySchema(universityService, nodeDefinitions)
+	countrySchema = NewCountrySchema(countryService, nodeDefinitions)
+	universitySchema = NewUniversitySchema(universityService, nodeDefinitions)
 
 	queryType := graphql.NewObject(graphql.ObjectConfig{
 		Name: "SabQuery",

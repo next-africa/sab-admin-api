@@ -2,16 +2,18 @@ package graphql
 
 import (
 	"errors"
+	"fmt"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/relay"
 	"golang.org/x/net/context"
 	"sab.com/domain/university"
 	"strconv"
+	"strings"
 )
 
 type UniversitySchema struct {
-	universityGraphService *UniversityGraphService
-	nodeDefinitions        *relay.NodeDefinitions
+	universityService *university.UniversityService
+	nodeDefinitions   *relay.NodeDefinitions
 
 	//dynamic types
 	universityType *graphql.Object
@@ -26,12 +28,20 @@ type UniversitySchema struct {
 }
 
 func NewUniversitySchema(universityService *university.UniversityService, definitions *relay.NodeDefinitions) *UniversitySchema {
-	universityGraphService := NewUniversityGraphqlService(universityService)
-	return &UniversitySchema{universityGraphService: &universityGraphService, nodeDefinitions: definitions}
+	return &UniversitySchema{universityService: universityService, nodeDefinitions: definitions}
 }
 
 func (schema *UniversitySchema) GetUniversityByGlobalId(encodedGlobalId string) (UniversityNode, error) {
-	return schema.universityGraphService.GetUniversityByGlobalId(encodedGlobalId)
+	idParts := strings.Split(encodedGlobalId, ":")
+
+	if len(idParts) != 2 {
+		return UniversityNode{}, errors.New("Invalid global university Id, the country relay Id should be of the form University:{countryCode}:{universityId}")
+	}
+
+	countryCode := idParts[0]
+	universityId := idParts[1]
+
+	return schema.getUniversityNodeByCountryCodeAndUniversityId(universityId, countryCode)
 }
 
 func (schema *UniversitySchema) GetUniversityType() *graphql.Object {
@@ -67,7 +77,7 @@ func (schema *UniversitySchema) GetUniversitiesQuery() *graphql.Field {
 				},
 			},
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				return schema.universityGraphService.GetAllUniversities(p.Args["countryCode"].(string))
+				return schema.getAllUniversities(p.Args["countryCode"].(string))
 			},
 		}
 	}
@@ -91,7 +101,7 @@ func (schema *UniversitySchema) GetUniversityQuery() *graphql.Field {
 				},
 			},
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				return schema.universityGraphService.GetUniversityNodeByCountryCodeAndUniversityId(p.Args["universityId"].(string), p.Args["countryCode"].(string))
+				return schema.getUniversityNodeByCountryCodeAndUniversityId(p.Args["universityId"].(string), p.Args["countryCode"].(string))
 			},
 		}
 	}
@@ -110,7 +120,7 @@ func (schema *UniversitySchema) GetCreateUniversityMutation() *graphql.Field {
 						if payload, ok := p.Source.(map[string]interface{}); ok {
 							createdUniversity := payload["university"].(university.University)
 							countryCode := payload["countryCode"].(string)
-							return schema.universityGraphService.NewUniversityNodeFromUniversity(&createdUniversity, countryCode), nil
+							return newUniversityNodeFromUniversity(&createdUniversity, countryCode), nil
 						} else {
 							return nil, nil
 						}
@@ -127,7 +137,7 @@ func (schema *UniversitySchema) GetCreateUniversityMutation() *graphql.Field {
 					return nil, err
 				}
 
-				if err := schema.universityGraphService.CreateUniversity(&aUniversity, countryCode); err != nil {
+				if err := schema.universityService.CreateUniversity(&aUniversity, countryCode); err != nil {
 					return nil, err
 				}
 
@@ -140,6 +150,90 @@ func (schema *UniversitySchema) GetCreateUniversityMutation() *graphql.Field {
 	}
 
 	return schema.createUniversityMutation
+}
+
+func (schema *UniversitySchema) GetUpdateUniversityMutation() *graphql.Field {
+	if schema.updateUniversityMutation == nil {
+		schema.updateUniversityMutation = relay.MutationWithClientMutationID(relay.MutationConfig{
+			Name:        "UpdateUniversity",
+			InputFields: UpdateUniversityInputFields,
+			OutputFields: graphql.Fields{
+				"university": &graphql.Field{
+					Type: schema.GetUniversityType(),
+					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+						if payload, ok := p.Source.(map[string]interface{}); ok {
+							updatedUniversity := payload["university"].(university.University)
+							countryCode := payload["countryCode"].(string)
+							return newUniversityNodeFromUniversity(&updatedUniversity, countryCode), nil
+						} else {
+							return nil, nil
+						}
+					},
+				},
+			},
+
+			MutateAndGetPayload: func(inputMap map[string]interface{}, info graphql.ResolveInfo, ctx context.Context) (map[string]interface{}, error) {
+				countryCode := inputMap["countryCode"].(string)
+
+				aUniversity, err := getUniversityFromInputMap(inputMap["university"].(map[string]interface{}))
+
+				if err != nil {
+					return nil, err
+				}
+
+				if err := schema.universityService.UpdateUniversity(&aUniversity, countryCode); err != nil {
+					return nil, err
+				}
+
+				return map[string]interface{}{
+					"university":  aUniversity,
+					"countryCode": countryCode,
+				}, nil
+			},
+		})
+	}
+
+	return schema.updateUniversityMutation
+}
+
+func (schema *UniversitySchema) getUniversityNodeByCountryCodeAndUniversityId(universityIdString string, countryCode string) (UniversityNode, error) {
+	universityId, err := strconv.ParseInt(universityIdString, 10, 64)
+	if err != nil {
+		return UniversityNode{}, errors.New("Invalid university Id, university Id should be an Integer")
+	}
+
+	theUniversity, err := schema.universityService.GetUniversityByIdAndCountryCode(universityId, countryCode)
+
+	if err != nil {
+		return UniversityNode{}, err
+	}
+
+	return newUniversityNodeFromUniversity(&theUniversity, countryCode), nil
+}
+
+func (schema *UniversitySchema) getAllUniversities(countryCode string) ([]UniversityNode, error) {
+	if universities, err := schema.universityService.GetAllUniversitiesForCountryCode(countryCode); err != nil {
+		return []UniversityNode{}, nil
+	} else {
+		return mapUniversitiesToUniversityNodes(universities, countryCode), nil
+	}
+}
+
+func newUniversityNodeFromUniversity(aUniversity *university.University, countryCode string) UniversityNode {
+	return UniversityNode{computeUniversityGlobalId(countryCode, aUniversity.Id), aUniversity}
+}
+
+func computeUniversityGlobalId(countryCode string, universityId int64) (globalId string) {
+	globalId = fmt.Sprintf("%s:%v", countryCode, universityId)
+	return
+}
+
+func mapUniversitiesToUniversityNodes(universities []university.University, countryCode string) []UniversityNode {
+	universitiesMap := make([]UniversityNode, len(universities))
+	for i, v := range universities {
+		universitiesMap[i] = newUniversityNodeFromUniversity(&v, countryCode)
+	}
+	return universitiesMap
 }
 
 func getUniversityFromInputMap(inputMap map[string]interface{}) (university.University, error) {
@@ -217,48 +311,4 @@ func getUniversityFromInputMap(inputMap map[string]interface{}) (university.Univ
 		Address:         address,
 		Tuition:         tuition,
 	}, nil
-}
-
-func (schema *UniversitySchema) GetUpdateUniversityMutation() *graphql.Field {
-	if schema.updateUniversityMutation == nil {
-		schema.updateUniversityMutation = relay.MutationWithClientMutationID(relay.MutationConfig{
-			Name:        "UpdateUniversity",
-			InputFields: UpdateUniversityInputFields,
-			OutputFields: graphql.Fields{
-				"university": &graphql.Field{
-					Type: schema.GetUniversityType(),
-					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-						if payload, ok := p.Source.(map[string]interface{}); ok {
-							updatedUniversity := payload["university"].(university.University)
-							countryCode := payload["countryCode"].(string)
-							return schema.universityGraphService.NewUniversityNodeFromUniversity(&updatedUniversity, countryCode), nil
-						} else {
-							return nil, nil
-						}
-					},
-				},
-			},
-
-			MutateAndGetPayload: func(inputMap map[string]interface{}, info graphql.ResolveInfo, ctx context.Context) (map[string]interface{}, error) {
-				countryCode := inputMap["countryCode"].(string)
-
-				aUniversity, err := getUniversityFromInputMap(inputMap["university"].(map[string]interface{}))
-
-				if err != nil {
-					return nil, err
-				}
-
-				if err := schema.universityGraphService.UpdateUniversity(&aUniversity, countryCode); err != nil {
-					return nil, err
-				}
-
-				return map[string]interface{}{
-					"university":  aUniversity,
-					"countryCode": countryCode,
-				}, nil
-			},
-		})
-	}
-
-	return schema.updateUniversityMutation
 }

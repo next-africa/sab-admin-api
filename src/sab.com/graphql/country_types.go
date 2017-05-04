@@ -1,6 +1,14 @@
 package graphql
 
-import "github.com/graphql-go/graphql"
+import (
+	"github.com/graphql-go/graphql"
+	"sab.com/domain/country"
+)
+
+type CountryNode struct {
+	Id         string           `json:"id"`
+	Properties *country.Country `json:"properties"`
+}
 
 var CountryPropertiesType = graphql.NewObject(graphql.ObjectConfig{
 	Name:        "CountryProperties",

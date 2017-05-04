@@ -8,8 +8,8 @@ import (
 )
 
 type CountrySchema struct {
-	countryGraphService *CountryGraphService
-	nodeDefinitions     *relay.NodeDefinitions
+	countryService  *country.CountryService
+	nodeDefinitions *relay.NodeDefinitions
 
 	//dynamic types
 	countryType *graphql.Object
@@ -23,8 +23,8 @@ type CountrySchema struct {
 }
 
 func NewCountrySchema(countryService *country.CountryService, definitions *relay.NodeDefinitions) *CountrySchema {
-	countryGraphService := NewCountryGraphqlService(countryService)
-	return &CountrySchema{countryGraphService: &countryGraphService, nodeDefinitions: definitions}
+
+	return &CountrySchema{countryService: countryService, nodeDefinitions: definitions}
 }
 
 func (schema *CountrySchema) GetCountryType() *graphql.Object {
@@ -55,11 +55,11 @@ func (schema *CountrySchema) GetCreateCountryMutation() *graphql.Field {
 			InputFields: CreateCountryInputFields,
 			OutputFields: graphql.Fields{
 				"country": &graphql.Field{
-					Type: schema.GetCountryType(),
+					Type: graphql.NewNonNull(schema.GetCountryType()),
 					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 						if payload, ok := p.Source.(map[string]interface{}); ok {
 							createdCountry := payload["country"].(country.Country)
-							return schema.countryGraphService.NewCountryNodeFromCountry(&createdCountry), nil
+							return newCountryNodeFromCountry(&createdCountry), nil
 						} else {
 							return nil, nil
 						}
@@ -70,7 +70,7 @@ func (schema *CountrySchema) GetCreateCountryMutation() *graphql.Field {
 				code := inputMap["code"].(string)
 				name := inputMap["name"].(string)
 				aCountry := country.Country{Code: code, Name: name}
-				if err := schema.countryGraphService.SaveCountry(&aCountry); err != nil {
+				if err := schema.saveCountry(&aCountry); err != nil {
 					return nil, err
 				}
 				return map[string]interface{}{
@@ -90,7 +90,7 @@ func (schema *CountrySchema) GetCountriesQuery() *graphql.Field {
 			Description: "Get the list of countries supported by the application",
 			Type:        graphql.NewList(schema.GetCountryType()),
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				return schema.countryGraphService.GetAllCountries()
+				return schema.getAllCountries()
 			},
 		}
 	}
@@ -102,7 +102,7 @@ func (schema *CountrySchema) GetCountryQuery() *graphql.Field {
 		schema.countryQuery = &graphql.Field{
 			Name:        "Country",
 			Description: "Get a country by country code",
-			Type:        schema.GetCountryType(),
+			Type:        graphql.NewNonNull(schema.GetCountryType()),
 			Args: graphql.FieldConfigArgument{
 				"code": &graphql.ArgumentConfig{
 					Type:        graphql.NewNonNull(graphql.String),
@@ -110,13 +110,46 @@ func (schema *CountrySchema) GetCountryQuery() *graphql.Field {
 				},
 			},
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				return schema.countryGraphService.GetCountryNodeByCode(p.Args["code"].(string))
+				return schema.getCountryNodeByCode(p.Args["code"].(string))
 			},
 		}
 	}
 	return schema.countryQuery
 }
 
-func (schema *CountrySchema) GetCountryByGlobalId(encodedGlobalId string) (CountryNode, error) {
-	return schema.countryGraphService.GetCountryByGlobalId(encodedGlobalId)
+func (schema *CountrySchema) GetCountryByGlobalId(globalId string) (interface{}, error) {
+	return schema.getCountryNodeByCode(globalId)
+
+}
+
+func (schema *CountrySchema) saveCountry(country *country.Country) error {
+	return schema.countryService.SaveCountry(country)
+}
+
+func (schema *CountrySchema) getAllCountries() (interface{}, error) {
+	if countries, err := schema.countryService.GetAllCountries(); err != nil {
+		return nil, err
+	} else {
+		return mapCountriesToCountryNodes(countries), nil
+	}
+}
+
+func (schema *CountrySchema) getCountryNodeByCode(code string) (interface{}, error) {
+	theCountry, err := schema.countryService.GetCountryByCode(code)
+	if err != nil {
+		return nil, err
+	}
+	return newCountryNodeFromCountry(&theCountry), nil
+}
+
+func newCountryNodeFromCountry(aCountry *country.Country) CountryNode {
+	return CountryNode{aCountry.Code, aCountry}
+}
+
+func mapCountriesToCountryNodes(countries []country.Country) []CountryNode {
+	countriesMap := make([]CountryNode, len(countries))
+	for i := range countries {
+		countriesMap[i] = newCountryNodeFromCountry(&countries[i])
+	}
+	return countriesMap
 }

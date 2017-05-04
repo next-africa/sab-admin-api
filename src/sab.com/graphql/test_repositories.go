@@ -11,7 +11,7 @@ type InMemoryUniversityRepository struct {
 	universities map[string]map[int64]university.University
 }
 
-func (r *InMemoryUniversityRepository) Save(univ *university.University, countryCode string) error {
+func (r InMemoryUniversityRepository) Save(univ *university.University, countryCode string) error {
 	if !r.countryExists(countryCode) {
 		r.universities[countryCode] = make(map[int64]university.University)
 	}
@@ -24,7 +24,7 @@ func (r *InMemoryUniversityRepository) Save(univ *university.University, country
 	return nil
 }
 
-func (r *InMemoryUniversityRepository) GetById(id int64, countryCode string) (university.University, error) {
+func (r InMemoryUniversityRepository) GetById(id int64, countryCode string) (university.University, error) {
 	if !r.countryExists(countryCode) {
 		return university.University{}, country.CountryNotFoundError
 	}
@@ -36,7 +36,7 @@ func (r *InMemoryUniversityRepository) GetById(id int64, countryCode string) (un
 
 }
 
-func (r *InMemoryUniversityRepository) GetAll(countryCode string) ([]university.University, error) {
+func (r InMemoryUniversityRepository) GetAll(countryCode string) ([]university.University, error) {
 	var universities []university.University
 	if !r.countryExists(countryCode) {
 		return universities, nil
@@ -49,7 +49,7 @@ func (r *InMemoryUniversityRepository) GetAll(countryCode string) ([]university.
 	return universities, nil
 }
 
-func (r *InMemoryUniversityRepository) HasUniversity(id int64, countryCode string) (bool, error) {
+func (r InMemoryUniversityRepository) HasUniversity(id int64, countryCode string) (bool, error) {
 	if !r.countryExists(countryCode) {
 		return false, nil
 	}
@@ -59,41 +59,36 @@ func (r *InMemoryUniversityRepository) HasUniversity(id int64, countryCode strin
 	return universityExists, nil
 }
 
-func (r *InMemoryUniversityRepository) countryExists(countryCode string) (result bool) {
+func (r InMemoryUniversityRepository) countryExists(countryCode string) (result bool) {
 	_, result = r.universities[countryCode]
 	return
 }
 
 type InMemoryCountryRepository struct {
-	countries map[string]country.Country
+	countries []country.Country
 }
 
 func (r *InMemoryCountryRepository) Save(ctr *country.Country) error {
-	if r.countries == nil {
-		r.countries = make(map[string]country.Country, 1)
-	}
-	r.countries[ctr.Code] = *ctr
+	r.countries = append(r.countries, *ctr)
 	return nil
 }
 
 func (r *InMemoryCountryRepository) GetByCode(code string) (country.Country, error) {
-	if ctr, ok := r.countries[code]; ok {
-		return ctr, nil
-	} else {
-		return country.Country{}, country.CountryNotFoundError
+	for _, ctr := range r.countries {
+		if ctr.Code == code {
+			return ctr, nil
+		}
 	}
+	return country.Country{}, country.CountryNotFoundError
 }
 
 func (r *InMemoryCountryRepository) GetAll() ([]country.Country, error) {
-	countries := make([]country.Country, len(r.countries))
-	for _, aCountry := range r.countries {
-		countries = append(countries, aCountry)
-	}
-	return countries, nil
+	return r.countries, nil
 }
 
 func (r *InMemoryCountryRepository) HasCountryWithCode(code string) (result bool, err error) {
-	_, result = r.countries[code]
+	_, err = r.GetByCode(code)
+	result = err != nil
 	return
 }
 
