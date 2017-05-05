@@ -10,7 +10,7 @@ var del   = require('del')
 
 var config = {
     assetsDir : 'build',
-    appAdminDir : '../appengine/admin-module'
+    appAdminDir : '../src/sab.com/gae/admin-module'
 }
 gulp.task('watch', function (){
     gulp.watch('src/**/*', ['default'], {ignoreInitial: false})

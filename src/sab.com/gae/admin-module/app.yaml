@@ -3,8 +3,7 @@ handlers:
 - login: admin
   script: _go_app
   url: /api/.*
-- login: admin
-  script: _go_app
+- script: _go_app
   url: /graphql
 - login: admin
   static_dir: static

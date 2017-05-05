@@ -10,7 +10,7 @@ import NewUniversity from './Pages/NewUniversity';
 import ViewUniversity from './Pages/ViewUniversity';
 import Universities from './containers/Universities'
 import  Sidebar  from 'react-sidebar';
-
+import Relay from 'react-relay'
 class App extends Component{
     constructor(props){
         super(props);
@@ -28,17 +28,12 @@ class App extends Component{
             currentPageId : 0,
             universitiesList: []
         }
-
-
     this.currentPage = this.currentPage.bind(this);
     this.setCurrentPage = this.setCurrentPage.bind(this);
     this.onSetDocked = this.onSetDocked.bind(this);
     this.toggleOpen = this.toggleOpen.bind(this);
     this.toggleDocked = this.toggleDocked.bind(this);
     this.generateItem = this.generateItem.bind(this);
-
-
-
     };
     componentDidMount(){
         let that = this
@@ -70,28 +65,23 @@ class App extends Component{
             viewUniversity: <ViewUniversity universitiesList={this.state.universitiesList} currentPageId={this.state.currentPageId}/>,
         }[this.state.currentPage];
     }
-
     componentWillMount() {
         const mql = window.matchMedia(`(min-width: 800px)`);
         mql.addListener(this.mediaQueryChanged);
         this.setState({mql: mql, docked: mql.matches});
     }
-
     componentWillUnmount() {
         this.state.mql.removeListener(this.mediaQueryChanged);
     }
-
     onSetOpen(open) {
         this.setState({open: open});
     }
     onSetDocked(docked) {
         this.setState({docked: !docked});
     }
-
     mediaQueryChanged() {
         this.setState({docked: this.state.mql.matches});
     }
-
     toggleOpen(e) {
         e.preventDefault();
         this.setState({open: !this.state.open});
@@ -134,7 +124,6 @@ class App extends Component{
 
             }
         ]
-
         var items = data.map(this.generateItem);
         var user = userInfos.map(this.generateUserInfos);
         const sidebar = <SidebarContent setCurrentPage={this.setCurrentPage}/>;
@@ -197,4 +186,15 @@ class App extends Component{
     //children: React.propTypes.node,
 //}
 
-export default App;
+export default Relay.createContainer(App,{
+    initialVariables: {
+        code: "ca"
+    },
+    fragments: {
+        country: () => Relay.QL`
+            query{ 
+                country
+            }
+        `
+    }
+});

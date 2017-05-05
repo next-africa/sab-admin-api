@@ -13,6 +13,7 @@ src/sab.com/vendor
 !src/sab.com/vendor/vendor.json
 
 secrets.json
-node_modules/
+node_modules
 
 *.log
+config
