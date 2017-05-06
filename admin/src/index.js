@@ -16,13 +16,7 @@ class AppRoute extends Relay.Route {
  static queries = {
  country: () => Relay.QL`
  query { 
-    country(code: $code){
-       id
-       properties {
-         code
-         name
-       }
-    } 
+    country(code: $code)
  }
  `,
  };

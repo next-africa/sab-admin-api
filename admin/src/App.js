@@ -191,9 +191,14 @@ export default Relay.createContainer(App,{
         code: "ca"
     },
     fragments: {
-        country: () => Relay.QL`
-            query{ 
-                country
+        country : () => Relay.QL`
+            fragment on Country{
+                id
+                properties{
+                    code
+                    name
+                }
+                
             }
         `
     }
