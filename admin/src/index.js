@@ -16,7 +16,7 @@ class AppRoute extends Relay.Route {
  static queries = {
  country: () => Relay.QL`
  query { 
-    country(code: $code)
+    country(code:$code)
  }
  `,
  };
@@ -28,7 +28,7 @@ class AppRoute extends Relay.Route {
  static routeName = 'AppRoute';
  }
 
- let appRoute = new AppRoute({code:"ca"});
+ let appRoute = new AppRoute({code:"us"});
  ReactDOM.render(
  <Relay.RootContainer
  Component={App}

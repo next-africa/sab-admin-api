@@ -11,6 +11,7 @@ import ViewUniversity from './Pages/ViewUniversity';
 import Universities from './containers/Universities'
 import  Sidebar  from 'react-sidebar';
 import Relay from 'react-relay'
+import Countries from './containers/Countries'
 class App extends Component{
     constructor(props){
         super(props);
@@ -126,6 +127,7 @@ class App extends Component{
         ]
         var items = data.map(this.generateItem);
         var user = userInfos.map(this.generateUserInfos);
+
         const sidebar = <SidebarContent setCurrentPage={this.setCurrentPage}/>;
 
         const contentHeader = (
@@ -138,10 +140,14 @@ class App extends Component{
 
                     {user}
                 </ul>
+                <ul className="nav navbar-nav navbar-right">
+
+                </ul>
 
             </div>
         );
 
+        console.log("here", this.props.country)
         const sidebarProps = {
             sidebar: sidebar,
             docked: this.state.docked,
@@ -193,12 +199,11 @@ export default Relay.createContainer(App,{
     fragments: {
         country : () => Relay.QL`
             fragment on Country{
-                id
+                
                 properties{
                     code
-                    name
+                    
                 }
-                
             }
         `
     }

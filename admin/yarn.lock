@@ -4982,6 +4982,10 @@ relateurl@0.2.x:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
 
+relay-runtime@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-0.0.1.tgz#8090981f67e6617b99227a293777b013839b485f"
+
 renderkid@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/renderkid/-/renderkid-2.0.0.tgz#1859753e7a5adbf35443aba0d4e4579e78abee85"

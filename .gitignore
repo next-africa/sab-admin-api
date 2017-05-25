@@ -17,3 +17,5 @@ node_modules
 
 *.log
 config
+
+.idea/

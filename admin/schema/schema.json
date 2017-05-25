@@ -82,74 +82,13 @@
       "subscriptionType": null,
       "types": [
         {
-          "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. ",
-          "enumValues": null,
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "SCALAR",
-          "name": "Int",
-          "possibleTypes": null
-        },
-        {
-          "description": null,
-          "enumValues": null,
-          "fields": null,
-          "inputFields": [
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "amount",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "link",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            }
-          ],
-          "interfaces": null,
-          "kind": "INPUT_OBJECT",
-          "name": "TuitionInput",
-          "possibleTypes": null
-        },
-        {
-          "description": "A country",
+          "description": "An object with an ID",
           "enumValues": null,
           "fields": [
             {
               "args": [],
               "deprecationReason": null,
-              "description": "The properties of the country",
-              "isDeprecated": false,
-              "name": "properties",
-              "type": {
-                "kind": "OBJECT",
-                "name": "CountryProperties",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": "The ID of an object",
+              "description": "The id of the object",
               "isDeprecated": false,
               "name": "id",
               "type": {
@@ -164,15 +103,30 @@
             }
           ],
           "inputFields": null,
-          "interfaces": [
+          "interfaces": null,
+          "kind": "INTERFACE",
+          "name": "Node",
+          "possibleTypes": [
             {
-              "kind": "INTERFACE",
-              "name": "Node",
+              "kind": "OBJECT",
+              "name": "University",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "Country",
               "ofType": null
             }
-          ],
-          "kind": "OBJECT",
-          "name": "Country",
+          ]
+        },
+        {
+          "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"4\"`) or integer (such as `4`) input value will be accepted as an ID.",
+          "enumValues": null,
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "SCALAR",
+          "name": "ID",
           "possibleTypes": null
         },
         {
@@ -208,6 +162,683 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "CountryProperties",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "clientMutationId",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "country",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Country",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "CreateCountryPayload",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "university",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "UniversityInputForUpdate",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "clientMutationId",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "countryCode",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "UpdateUniversityInput",
+          "possibleTypes": null
+        },
+        {
+          "description": "The `Boolean` scalar type represents `true` or `false`.",
+          "enumValues": null,
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "SCALAR",
+          "name": "Boolean",
+          "possibleTypes": null
+        },
+        {
+          "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "isDeprecated",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "deprecationReason",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "description",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "args",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "__InputValue",
+                      "ofType": null
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "type",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "__Type",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "__Field",
+          "possibleTypes": null
+        },
+        {
+          "description": "An address",
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "city",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "state",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "postalCode",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "line",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "Address",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "countryCode",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "university",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "UniversityInputForCreate",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "clientMutationId",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "CreateUniversityInput",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "languages",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "website",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "programListLink",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "address",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AddressInput",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "tuition",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TuitionInput",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "UniversityInputForUpdate",
+          "possibleTypes": null
+        },
+        {
+          "description": "A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.",
+          "enumValues": [
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to an input object type definition.",
+              "isDeprecated": false,
+              "name": "INPUT_OBJECT"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a subscription operation.",
+              "isDeprecated": false,
+              "name": "SUBSCRIPTION"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a field.",
+              "isDeprecated": false,
+              "name": "FIELD"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a fragment spread.",
+              "isDeprecated": false,
+              "name": "FRAGMENT_SPREAD"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a scalar definition.",
+              "isDeprecated": false,
+              "name": "SCALAR"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a object definition.",
+              "isDeprecated": false,
+              "name": "OBJECT"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to an interface definition.",
+              "isDeprecated": false,
+              "name": "INTERFACE"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a union definition.",
+              "isDeprecated": false,
+              "name": "UNION"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a mutation operation.",
+              "isDeprecated": false,
+              "name": "MUTATION"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a schema definition.",
+              "isDeprecated": false,
+              "name": "SCHEMA"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to an argument definition.",
+              "isDeprecated": false,
+              "name": "ARGUMENT_DEFINITION"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to an inline fragment.",
+              "isDeprecated": false,
+              "name": "INLINE_FRAGMENT"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a field definition.",
+              "isDeprecated": false,
+              "name": "FIELD_DEFINITION"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to an enum value definition.",
+              "isDeprecated": false,
+              "name": "ENUM_VALUE"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to an input object field definition.",
+              "isDeprecated": false,
+              "name": "INPUT_FIELD_DEFINITION"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a query operation.",
+              "isDeprecated": false,
+              "name": "QUERY"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to a fragment definition.",
+              "isDeprecated": false,
+              "name": "FRAGMENT_DEFINITION"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Location adjacent to an enum definition.",
+              "isDeprecated": false,
+              "name": "ENUM"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "__DirectiveLocation",
+          "possibleTypes": null
+        },
+        {
+          "description": "A tuition object with amount and source link",
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "link",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "amount",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "Tuition",
+          "possibleTypes": null
+        },
+        {
+          "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. ",
+          "enumValues": null,
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "SCALAR",
+          "name": "Int",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "programListLink",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "address",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AddressInput",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "tuition",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TuitionInput",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "languages",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "website",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "UniversityInputForCreate",
           "possibleTypes": null
         },
         {
@@ -346,6 +977,172 @@
           "possibleTypes": null
         },
         {
+          "description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "description",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "type",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "__Type",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "A GraphQL-formatted string representing the default value for this input value.",
+              "isDeprecated": false,
+              "name": "defaultValue",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "__InputValue",
+          "possibleTypes": null
+        },
+        {
+          "description": "Properties of an University object",
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "The name of University.",
+              "isDeprecated": false,
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "The code of the languages used in this University",
+              "isDeprecated": false,
+              "name": "languages",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "The link to the website of this University",
+              "isDeprecated": false,
+              "name": "website",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "The link to the program list of this University",
+              "isDeprecated": false,
+              "name": "programListLink",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "address",
+              "type": {
+                "kind": "OBJECT",
+                "name": "Address",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "tuition",
+              "type": {
+                "kind": "OBJECT",
+                "name": "Tuition",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "UniversityProperties",
+          "possibleTypes": null
+        },
+        {
           "description": null,
           "enumValues": null,
           "fields": null,
@@ -397,14 +1194,41 @@
           "possibleTypes": null
         },
         {
-          "description": null,
+          "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
           "enumValues": null,
           "fields": null,
-          "inputFields": [
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "SCALAR",
+          "name": "String",
+          "possibleTypes": null
+        },
+        {
+          "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
+          "enumValues": null,
+          "fields": [
             {
-              "defaultValue": null,
+              "args": [],
+              "deprecationReason": null,
               "description": null,
-              "name": "programListLink",
+              "isDeprecated": false,
+              "name": "kind",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "__TypeKind",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "name",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -412,173 +1236,48 @@
               }
             },
             {
-              "defaultValue": null,
+              "args": [],
+              "deprecationReason": null,
               "description": null,
-              "name": "address",
+              "isDeprecated": false,
+              "name": "description",
               "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "AddressInput",
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
             {
-              "defaultValue": null,
-              "description": null,
-              "name": "tuition",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "TuitionInput",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "id",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+              "args": [
+                {
+                  "defaultValue": "false",
+                  "description": null,
+                  "name": "includeDeprecated",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
                 }
-              }
-            },
-            {
-              "defaultValue": null,
+              ],
+              "deprecationReason": null,
               "description": null,
-              "name": "name",
+              "isDeprecated": false,
+              "name": "fields",
               "type": {
-                "kind": "NON_NULL",
+                "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "languages",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "LIST",
+                  "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
+                    "kind": "OBJECT",
+                    "name": "__Field",
                     "ofType": null
                   }
                 }
               }
             },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "website",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            }
-          ],
-          "interfaces": null,
-          "kind": "INPUT_OBJECT",
-          "name": "UniversityInputForUpdate",
-          "possibleTypes": null
-        },
-        {
-          "description": null,
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "country",
-              "type": {
-                "kind": "OBJECT",
-                "name": "Country",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "clientMutationId",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "CreateCountryPayload",
-          "possibleTypes": null
-        },
-        {
-          "description": null,
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "university",
-              "type": {
-                "kind": "OBJECT",
-                "name": "University",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "clientMutationId",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "CreateUniversityPayload",
-          "possibleTypes": null
-        },
-        {
-          "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
-          "enumValues": null,
-          "fields": [
             {
               "args": [],
               "deprecationReason": null,
@@ -624,81 +1323,10 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "kind",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "__TypeKind",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [
-                {
-                  "defaultValue": "false",
-                  "description": null,
-                  "name": "includeDeprecated",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Boolean",
-                    "ofType": null
-                  }
-                }
-              ],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "fields",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "__Field",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
               "name": "ofType",
               "type": {
                 "kind": "OBJECT",
                 "name": "__Type",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "description",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
                 "ofType": null
               }
             },
@@ -758,445 +1386,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "__Type",
-          "possibleTypes": null
-        },
-        {
-          "description": "The `Boolean` scalar type represents `true` or `false`.",
-          "enumValues": null,
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "SCALAR",
-          "name": "Boolean",
-          "possibleTypes": null
-        },
-        {
-          "description": null,
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [
-                {
-                  "defaultValue": null,
-                  "description": "The code of the country to get",
-                  "name": "countryCode",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": "The university Id to get",
-                  "name": "universityId",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                }
-              ],
-              "deprecationReason": null,
-              "description": "Get a country by country code",
-              "isDeprecated": false,
-              "name": "university",
-              "type": {
-                "kind": "OBJECT",
-                "name": "University",
-                "ofType": null
-              }
-            },
-            {
-              "args": [
-                {
-                  "defaultValue": null,
-                  "description": "The ID of an object",
-                  "name": "id",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "ID",
-                      "ofType": null
-                    }
-                  }
-                }
-              ],
-              "deprecationReason": null,
-              "description": "Fetches an object given its ID",
-              "isDeprecated": false,
-              "name": "node",
-              "type": {
-                "kind": "INTERFACE",
-                "name": "Node",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": "Get the list of countries supported by the application",
-              "isDeprecated": false,
-              "name": "countries",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Country",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "args": [
-                {
-                  "defaultValue": null,
-                  "description": "The code of the country to get",
-                  "name": "code",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                }
-              ],
-              "deprecationReason": null,
-              "description": "Get a country by country code",
-              "isDeprecated": false,
-              "name": "country",
-              "type": {
-                "kind": "OBJECT",
-                "name": "Country",
-                "ofType": null
-              }
-            },
-            {
-              "args": [
-                {
-                  "defaultValue": null,
-                  "description": "The country code of the country from witch to retrieve universities",
-                  "name": "countryCode",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                }
-              ],
-              "deprecationReason": null,
-              "description": "Get the list of universities of this the given country",
-              "isDeprecated": false,
-              "name": "universities",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "University",
-                  "ofType": null
-                }
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "SabQuery",
-          "possibleTypes": null
-        },
-        {
-          "description": "An address",
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "city",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "state",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "postalCode",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "line",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "Address",
-          "possibleTypes": null
-        },
-        {
-          "description": "A tuition object with amount and source link",
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "link",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "amount",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "Tuition",
-          "possibleTypes": null
-        },
-        {
-          "description": null,
-          "enumValues": null,
-          "fields": null,
-          "inputFields": [
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "countryCode",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "university",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "UniversityInputForCreate",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "clientMutationId",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            }
-          ],
-          "interfaces": null,
-          "kind": "INPUT_OBJECT",
-          "name": "CreateUniversityInput",
-          "possibleTypes": null
-        },
-        {
-          "description": "A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.",
-          "enumValues": [
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to an enum definition.",
-              "isDeprecated": false,
-              "name": "ENUM"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to an input object type definition.",
-              "isDeprecated": false,
-              "name": "INPUT_OBJECT"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a query operation.",
-              "isDeprecated": false,
-              "name": "QUERY"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a subscription operation.",
-              "isDeprecated": false,
-              "name": "SUBSCRIPTION"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to an inline fragment.",
-              "isDeprecated": false,
-              "name": "INLINE_FRAGMENT"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a schema definition.",
-              "isDeprecated": false,
-              "name": "SCHEMA"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a object definition.",
-              "isDeprecated": false,
-              "name": "OBJECT"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a mutation operation.",
-              "isDeprecated": false,
-              "name": "MUTATION"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a field definition.",
-              "isDeprecated": false,
-              "name": "FIELD_DEFINITION"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to an argument definition.",
-              "isDeprecated": false,
-              "name": "ARGUMENT_DEFINITION"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to an interface definition.",
-              "isDeprecated": false,
-              "name": "INTERFACE"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to an input object field definition.",
-              "isDeprecated": false,
-              "name": "INPUT_FIELD_DEFINITION"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a fragment definition.",
-              "isDeprecated": false,
-              "name": "FRAGMENT_DEFINITION"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a scalar definition.",
-              "isDeprecated": false,
-              "name": "SCALAR"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a union definition.",
-              "isDeprecated": false,
-              "name": "UNION"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to an enum value definition.",
-              "isDeprecated": false,
-              "name": "ENUM_VALUE"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a field.",
-              "isDeprecated": false,
-              "name": "FIELD"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Location adjacent to a fragment spread.",
-              "isDeprecated": false,
-              "name": "FRAGMENT_SPREAD"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "__DirectiveLocation",
-          "possibleTypes": null
-        },
-        {
-          "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"4\"`) or integer (such as `4`) input value will be accepted as an ID.",
-          "enumValues": null,
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "SCALAR",
-          "name": "ID",
           "possibleTypes": null
         },
         {
@@ -1299,6 +1488,20 @@
             {
               "defaultValue": null,
               "description": null,
+              "name": "code",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
               "name": "clientMutationId",
               "type": {
                 "kind": "NON_NULL",
@@ -1314,20 +1517,6 @@
               "defaultValue": null,
               "description": null,
               "name": "name",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "code",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -1352,36 +1541,85 @@
             {
               "defaultValue": null,
               "description": null,
-              "name": "programListLink",
+              "name": "amount",
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
               }
             },
             {
               "defaultValue": null,
               "description": null,
-              "name": "address",
+              "name": "link",
               "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "AddressInput",
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "TuitionInput",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "university",
+              "type": {
+                "kind": "OBJECT",
+                "name": "University",
                 "ofType": null
               }
             },
             {
-              "defaultValue": null,
+              "args": [],
+              "deprecationReason": null,
               "description": null,
-              "name": "tuition",
+              "isDeprecated": false,
+              "name": "clientMutationId",
               "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "TuitionInput",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               }
-            },
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "CreateUniversityPayload",
+          "possibleTypes": null
+        },
+        {
+          "description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
+          "enumValues": null,
+          "fields": [
             {
-              "defaultValue": null,
+              "args": [],
+              "deprecationReason": null,
               "description": null,
+              "isDeprecated": false,
               "name": "name",
               "type": {
                 "kind": "NON_NULL",
@@ -1394,100 +1632,17 @@
               }
             },
             {
-              "defaultValue": null,
+              "args": [],
+              "deprecationReason": null,
               "description": null,
-              "name": "languages",
+              "isDeprecated": false,
+              "name": "description",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                }
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               }
             },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "website",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            }
-          ],
-          "interfaces": null,
-          "kind": "INPUT_OBJECT",
-          "name": "UniversityInputForCreate",
-          "possibleTypes": null
-        },
-        {
-          "description": null,
-          "enumValues": null,
-          "fields": null,
-          "inputFields": [
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "clientMutationId",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "countryCode",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "university",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "UniversityInputForUpdate",
-                  "ofType": null
-                }
-              }
-            }
-          ],
-          "interfaces": null,
-          "kind": "INPUT_OBJECT",
-          "name": "UpdateUniversityInput",
-          "possibleTypes": null
-        },
-        {
-          "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
-          "enumValues": null,
-          "fields": [
             {
               "args": [],
               "deprecationReason": null,
@@ -1515,71 +1670,160 @@
                 "name": "String",
                 "ofType": null
               }
-            },
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "__EnumValue",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": [
             {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "name",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "description",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "args",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
+              "args": [
+                {
+                  "defaultValue": null,
+                  "description": "The code of the country to get",
+                  "name": "code",
+                  "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "OBJECT",
-                      "name": "__InputValue",
+                      "kind": "SCALAR",
+                      "name": "String",
                       "ofType": null
                     }
                   }
                 }
-              }
-            },
-            {
-              "args": [],
+              ],
               "deprecationReason": null,
-              "description": null,
+              "description": "Get a country by country code",
               "isDeprecated": false,
-              "name": "type",
+              "name": "country",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "__Type",
+                  "name": "Country",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [
+                {
+                  "defaultValue": null,
+                  "description": "The country code of the country from witch to retrieve universities",
+                  "name": "countryCode",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ],
+              "deprecationReason": null,
+              "description": "Get the list of universities of this the given country",
+              "isDeprecated": false,
+              "name": "universities",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "University",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [
+                {
+                  "defaultValue": null,
+                  "description": "The code of the country to get",
+                  "name": "countryCode",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": "The university Id to get",
+                  "name": "universityId",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ],
+              "deprecationReason": null,
+              "description": "Get a country by country code",
+              "isDeprecated": false,
+              "name": "university",
+              "type": {
+                "kind": "OBJECT",
+                "name": "University",
+                "ofType": null
+              }
+            },
+            {
+              "args": [
+                {
+                  "defaultValue": null,
+                  "description": "The ID of an object",
+                  "name": "id",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  }
+                }
+              ],
+              "deprecationReason": null,
+              "description": "Fetches an object given its ID",
+              "isDeprecated": false,
+              "name": "node",
+              "type": {
+                "kind": "INTERFACE",
+                "name": "Node",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "Get the list of countries supported by the application",
+              "isDeprecated": false,
+              "name": "countries",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Country",
                   "ofType": null
                 }
               }
@@ -1588,74 +1832,7 @@
           "inputFields": null,
           "interfaces": [],
           "kind": "OBJECT",
-          "name": "__Field",
-          "possibleTypes": null
-        },
-        {
-          "description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "name",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "description",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "type",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "__Type",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": "A GraphQL-formatted string representing the default value for this input value.",
-              "isDeprecated": false,
-              "name": "defaultValue",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "__InputValue",
+          "name": "SabQuery",
           "possibleTypes": null
         },
         {
@@ -1704,132 +1881,21 @@
           "possibleTypes": null
         },
         {
-          "description": "Properties of an University object",
+          "description": "A country",
           "enumValues": null,
           "fields": [
             {
               "args": [],
               "deprecationReason": null,
-              "description": "The name of University.",
-              "isDeprecated": false,
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": "The code of the languages used in this University",
-              "isDeprecated": false,
-              "name": "languages",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": "The link to the website of this University",
-              "isDeprecated": false,
-              "name": "website",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": "The link to the program list of this University",
-              "isDeprecated": false,
-              "name": "programListLink",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "address",
-              "type": {
-                "kind": "OBJECT",
-                "name": "Address",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "tuition",
-              "type": {
-                "kind": "OBJECT",
-                "name": "Tuition",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
+              "description": "The ID of an object",
               "isDeprecated": false,
               "name": "id",
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "UniversityProperties",
-          "possibleTypes": null
-        },
-        {
-          "description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "deprecationReason",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "name",
-              "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "String",
+                  "name": "ID",
                   "ofType": null
                 }
               }
@@ -1837,54 +1903,32 @@
             {
               "args": [],
               "deprecationReason": null,
-              "description": null,
+              "description": "The properties of the country",
               "isDeprecated": false,
-              "name": "description",
+              "name": "properties",
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
+                "kind": "OBJECT",
+                "name": "CountryProperties",
                 "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "isDeprecated",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
               }
             }
           ],
           "inputFields": null,
-          "interfaces": [],
+          "interfaces": [
+            {
+              "kind": "INTERFACE",
+              "name": "Node",
+              "ofType": null
+            }
+          ],
           "kind": "OBJECT",
-          "name": "__EnumValue",
+          "name": "Country",
           "possibleTypes": null
         },
         {
           "description": null,
           "enumValues": null,
           "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "university",
-              "type": {
-                "kind": "OBJECT",
-                "name": "University",
-                "ofType": null
-              }
-            },
             {
               "args": [],
               "deprecationReason": null,
@@ -1900,6 +1944,18 @@
                   "ofType": null
                 }
               }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "university",
+              "type": {
+                "kind": "OBJECT",
+                "name": "University",
+                "ofType": null
+              }
             }
           ],
           "inputFields": null,
@@ -1912,30 +1968,6 @@
           "description": "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
           "enumValues": null,
           "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": "A list of all types supported by this server.",
-              "isDeprecated": false,
-              "name": "types",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "__Type",
-                      "ofType": null
-                    }
-                  }
-                }
-              }
-            },
             {
               "args": [],
               "deprecationReason": null,
@@ -1999,6 +2031,30 @@
                   }
                 }
               }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "A list of all types supported by this server.",
+              "isDeprecated": false,
+              "name": "types",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "__Type",
+                      "ofType": null
+                    }
+                  }
+                }
+              }
             }
           ],
           "inputFields": null,
@@ -2010,6 +2066,18 @@
         {
           "description": "An enum describing what kind of type a given `__Type` is",
           "enumValues": [
+            {
+              "deprecationReason": null,
+              "description": "Indicates this type is an enum. `enumValues` is a valid field.",
+              "isDeprecated": false,
+              "name": "ENUM"
+            },
+            {
+              "deprecationReason": null,
+              "description": "Indicates this type is an input object. `inputFields` is a valid field.",
+              "isDeprecated": false,
+              "name": "INPUT_OBJECT"
+            },
             {
               "deprecationReason": null,
               "description": "Indicates this type is a list. `ofType` is a valid field.",
@@ -2045,18 +2113,6 @@
               "description": "Indicates this type is a union. `possibleTypes` is a valid field.",
               "isDeprecated": false,
               "name": "UNION"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Indicates this type is an enum. `enumValues` is a valid field.",
-              "isDeprecated": false,
-              "name": "ENUM"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Indicates this type is an input object. `inputFields` is a valid field.",
-              "isDeprecated": false,
-              "name": "INPUT_OBJECT"
             }
           ],
           "fields": null,
@@ -2064,54 +2120,6 @@
           "interfaces": null,
           "kind": "ENUM",
           "name": "__TypeKind",
-          "possibleTypes": null
-        },
-        {
-          "description": "An object with an ID",
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": "The id of the object",
-              "isDeprecated": false,
-              "name": "id",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "INTERFACE",
-          "name": "Node",
-          "possibleTypes": [
-            {
-              "kind": "OBJECT",
-              "name": "University",
-              "ofType": null
-            },
-            {
-              "kind": "OBJECT",
-              "name": "Country",
-              "ofType": null
-            }
-          ]
-        },
-        {
-          "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
-          "enumValues": null,
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "SCALAR",
-          "name": "String",
           "possibleTypes": null
         }
       ]

@@ -20,11 +20,11 @@ input AddressInput {
 
 # A country
 type Country implements Node {
-  # The properties of the country
-  properties: CountryProperties
-
   # The ID of an object
   id: ID!
+
+  # The properties of the country
+  properties: CountryProperties
 }
 
 # Properties of a Country object
@@ -37,14 +37,14 @@ type CountryProperties {
 }
 
 input CreateCountryInput {
+  code: String!
   clientMutationId: String!
   name: String!
-  code: String!
 }
 
 type CreateCountryPayload {
-  country: Country
   clientMutationId: String!
+  country: Country!
 }
 
 input CreateUniversityInput {
@@ -73,6 +73,18 @@ type SabMutation {
 
 type SabQuery {
   # Get a country by country code
+  country(
+    # The code of the country to get
+    code: String!
+  ): Country!
+
+  # Get the list of universities of this the given country
+  universities(
+    # The country code of the country from witch to retrieve universities
+    countryCode: String!
+  ): [University]
+
+  # Get a country by country code
   university(
     # The code of the country to get
     countryCode: String!
@@ -89,18 +101,6 @@ type SabQuery {
 
   # Get the list of countries supported by the application
   countries: [Country]
-
-  # Get a country by country code
-  country(
-    # The code of the country to get
-    code: String!
-  ): Country
-
-  # Get the list of universities of this the given country
-  universities(
-    # The country code of the country from witch to retrieve universities
-    countryCode: String!
-  ): [University]
 }
 
 # A tuition object with amount and source link
@@ -133,17 +133,19 @@ input UniversityInputForCreate {
 }
 
 input UniversityInputForUpdate {
+  languages: [String]!
+  website: String!
   programListLink: String
   address: AddressInput
   tuition: TuitionInput
   id: String!
   name: String!
-  languages: [String]!
-  website: String!
 }
 
 # Properties of an University object
 type UniversityProperties {
+  id: String
+
   # The name of University.
   name: String
 
@@ -157,16 +159,15 @@ type UniversityProperties {
   programListLink: String
   address: Address
   tuition: Tuition
-  id: String
 }
 
 input UpdateUniversityInput {
+  university: UniversityInputForUpdate!
   clientMutationId: String!
   countryCode: String!
-  university: UniversityInputForUpdate!
 }
 
 type UpdateUniversityPayload {
-  university: University
   clientMutationId: String!
+  university: University
 }
