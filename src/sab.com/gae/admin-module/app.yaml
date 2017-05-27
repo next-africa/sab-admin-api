@@ -1,8 +1,5 @@
 api_version: go1
 handlers:
-- login: admin
-  script: _go_app
-  url: /api/.*
 - script: _go_app
   url: /graphql
 - login: admin

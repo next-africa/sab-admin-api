@@ -20,7 +20,7 @@ type UniversityRepositoryTestSuite struct {
 	suite.Suite
 	contextStore *persistence.ContextStore
 	done         func()
-	repository   universityRepository
+	repository   DatastoreUniversityRepository
 }
 
 func (suite *UniversityRepositoryTestSuite) SetupSuite() {

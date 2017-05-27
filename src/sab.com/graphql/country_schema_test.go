@@ -13,7 +13,6 @@ type CountrySchemaTestSuite struct {
 }
 
 func (s *CountrySchemaTestSuite) TestCountriesQuery() {
-
 	tests := []TestCase{
 		{
 			Name: "Query countries given there are no countries",
@@ -267,6 +266,6 @@ func (s *CountrySchemaTestSuite) TestCreateCountryMutation() {
 
 }
 
-func TestSchema(t *testing.T) {
+func TestCountrySchema(t *testing.T) {
 	suite.Run(t, new(CountrySchemaTestSuite))
 }

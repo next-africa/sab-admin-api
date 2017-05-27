@@ -31,8 +31,8 @@ func NewUniversitySchema(universityService *university.UniversityService, defini
 	return &UniversitySchema{universityService: universityService, nodeDefinitions: definitions}
 }
 
-func (schema *UniversitySchema) GetUniversityByGlobalId(encodedGlobalId string) (UniversityNode, error) {
-	idParts := strings.Split(encodedGlobalId, ":")
+func (schema *UniversitySchema) GetUniversityByGlobalId(encodedGlobalId string) (interface{}, error) {
+	idParts := strings.Split(encodedGlobalId, "-")
 
 	if len(idParts) != 2 {
 		return UniversityNode{}, errors.New("Invalid global university Id, the country relay Id should be of the form University:{countryCode}:{universityId}")
@@ -69,7 +69,7 @@ func (schema *UniversitySchema) GetUniversitiesQuery() *graphql.Field {
 		schema.universitiesQuery = &graphql.Field{
 			Name:        "Universities",
 			Description: "Get the list of universities of this the given country",
-			Type:        graphql.NewList(schema.GetUniversityType()),
+			Type:        graphql.NewNonNull(graphql.NewList(schema.GetUniversityType())),
 			Args: graphql.FieldConfigArgument{
 				"countryCode": &graphql.ArgumentConfig{
 					Type:        graphql.NewNonNull(graphql.String),
@@ -88,7 +88,7 @@ func (schema *UniversitySchema) GetUniversityQuery() *graphql.Field {
 	if schema.universityQuery == nil {
 		schema.universityQuery = &graphql.Field{
 			Name:        "University",
-			Type:        schema.GetUniversityType(),
+			Type:        graphql.NewNonNull(schema.GetUniversityType()),
 			Description: "Get a country by country code",
 			Args: graphql.FieldConfigArgument{
 				"countryCode": &graphql.ArgumentConfig{
@@ -196,16 +196,16 @@ func (schema *UniversitySchema) GetUpdateUniversityMutation() *graphql.Field {
 	return schema.updateUniversityMutation
 }
 
-func (schema *UniversitySchema) getUniversityNodeByCountryCodeAndUniversityId(universityIdString string, countryCode string) (UniversityNode, error) {
+func (schema *UniversitySchema) getUniversityNodeByCountryCodeAndUniversityId(universityIdString string, countryCode string) (interface{}, error) {
 	universityId, err := strconv.ParseInt(universityIdString, 10, 64)
 	if err != nil {
-		return UniversityNode{}, errors.New("Invalid university Id, university Id should be an Integer")
+		return nil, errors.New("Invalid university Id, university Id should be an Integer")
 	}
 
 	theUniversity, err := schema.universityService.GetUniversityByIdAndCountryCode(universityId, countryCode)
 
 	if err != nil {
-		return UniversityNode{}, err
+		return nil, err
 	}
 
 	return newUniversityNodeFromUniversity(&theUniversity, countryCode), nil
@@ -213,7 +213,7 @@ func (schema *UniversitySchema) getUniversityNodeByCountryCodeAndUniversityId(un
 
 func (schema *UniversitySchema) getAllUniversities(countryCode string) ([]UniversityNode, error) {
 	if universities, err := schema.universityService.GetAllUniversitiesForCountryCode(countryCode); err != nil {
-		return []UniversityNode{}, nil
+		return []UniversityNode{}, err
 	} else {
 		return mapUniversitiesToUniversityNodes(universities, countryCode), nil
 	}
@@ -224,14 +224,14 @@ func newUniversityNodeFromUniversity(aUniversity *university.University, country
 }
 
 func computeUniversityGlobalId(countryCode string, universityId int64) (globalId string) {
-	globalId = fmt.Sprintf("%s:%v", countryCode, universityId)
+	globalId = fmt.Sprintf("%s-%v", countryCode, universityId)
 	return
 }
 
 func mapUniversitiesToUniversityNodes(universities []university.University, countryCode string) []UniversityNode {
 	universitiesMap := make([]UniversityNode, len(universities))
-	for i, v := range universities {
-		universitiesMap[i] = newUniversityNodeFromUniversity(&v, countryCode)
+	for i := range universities {
+		universitiesMap[i] = newUniversityNodeFromUniversity(&universities[i], countryCode)
 	}
 	return universitiesMap
 }

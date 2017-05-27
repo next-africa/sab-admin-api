@@ -48,7 +48,18 @@ func (suite *UniversityServiceTestSuite) TestCreateUniversityGivenUniversityAndI
 	}
 }
 
+func (suite *UniversityServiceTestSuite) TestGetUniversityByIdAndCountryCodeGivenCountryCodeIsNotValid() {
+	suite.countryRepository.On("HasCountryWithCode", INVALID_COUNTRY_CODE).Return(false, nil)
+
+	_, err := suite.service.GetUniversityByIdAndCountryCode(UNIVERSITY_ID, INVALID_COUNTRY_CODE)
+
+	if suite.Error(err) {
+		suite.Equal(country.CountryNotFoundError, err)
+	}
+}
+
 func (suite *UniversityServiceTestSuite) TestGetUniversityByIdAndCountryCodeGivenUniversityDoesNotExists() {
+	suite.countryRepository.On("HasCountryWithCode", VALID_COUNTRY_CODE).Return(true, nil)
 	suite.universityRepository.On("GetById", UNIVERSITY_ID, VALID_COUNTRY_CODE).Return(*new(University), UniversityNotFoundError)
 
 	_, err := suite.service.GetUniversityByIdAndCountryCode(UNIVERSITY_ID, VALID_COUNTRY_CODE)
@@ -59,6 +70,7 @@ func (suite *UniversityServiceTestSuite) TestGetUniversityByIdAndCountryCodeGive
 }
 
 func (suite *UniversityServiceTestSuite) TestGetUniversityByIdAndCountryCodeGivenUniversityExists() {
+	suite.countryRepository.On("HasCountryWithCode", VALID_COUNTRY_CODE).Return(true, nil)
 	expectedUniversity := University{Id: UNIVERSITY_ID}
 	suite.universityRepository.On("GetById", UNIVERSITY_ID, VALID_COUNTRY_CODE).Return(expectedUniversity, nil)
 
@@ -68,7 +80,18 @@ func (suite *UniversityServiceTestSuite) TestGetUniversityByIdAndCountryCodeGive
 	suite.Equal(expectedUniversity, obtainedUniversity)
 }
 
-func (suite *UniversityServiceTestSuite) TestGetAllUniversities() {
+func (suite *UniversityServiceTestSuite) TestGetAllUniversitiesGivenCountryCodeIsInvalid() {
+	suite.countryRepository.On("HasCountryWithCode", INVALID_COUNTRY_CODE).Return(false, nil)
+
+	_, err := suite.service.GetAllUniversitiesForCountryCode(INVALID_COUNTRY_CODE)
+
+	if suite.Error(err) {
+		suite.Equal(country.CountryNotFoundError, err)
+	}
+}
+
+func (suite *UniversityServiceTestSuite) TestGetAllUniversitiesGivenCountryCodeIsValid() {
+	suite.countryRepository.On("HasCountryWithCode", VALID_COUNTRY_CODE).Return(true, nil)
 	expectedUniversities := []University{*new(University)}
 	suite.universityRepository.On("GetAll", VALID_COUNTRY_CODE).Return(expectedUniversities, nil)
 

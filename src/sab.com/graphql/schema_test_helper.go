@@ -68,8 +68,10 @@ func (s *SchemaTestSuite) testGraphql(test TestCase) {
 }
 
 func (s *SchemaTestSuite) SetupTest() {
-	s.universityService = university.NewUniversityService(new(InMemoryUniversityRepository), new(InMemoryCountryRepository))
-	s.countryService = country.NewCountryService(new(InMemoryCountryRepository))
+	inMemoryUniversityRepository := new(InMemoryUniversityRepository)
+	inMemoryCountryRepository := new(InMemoryCountryRepository)
+	s.universityService = university.NewUniversityService(inMemoryUniversityRepository, inMemoryCountryRepository)
+	s.countryService = country.NewCountryService(inMemoryCountryRepository)
 
 	s.schema = getSabGraphqlSchema(&s.countryService, &s.universityService)
 }

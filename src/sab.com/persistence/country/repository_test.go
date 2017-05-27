@@ -12,10 +12,10 @@ import (
 	"time"
 )
 
-const COUNTRY_CODE = "CA"
-const COUNTRY_NAME = "CANADA"
+const COUNTRY_CODE = "ca"
+const COUNTRY_NAME = "Canada"
 
-const COUNTRY_CODE_1 = "US"
+const COUNTRY_CODE_1 = "us"
 const COUNTRY_NAME_1 = "United States"
 const NON_EXISTING_CODE = "MOCHO"
 
@@ -23,7 +23,7 @@ type CountryRepositoryTestSuite struct {
 	suite.Suite
 	contextStore *persistence.ContextStore
 	done         func()
-	repository   countryRepository
+	repository   DatastoreCountryRepository
 }
 
 func (suite *CountryRepositoryTestSuite) SetupSuite() {
@@ -109,8 +109,8 @@ func (suite *CountryRepositoryTestSuite) TestGetAllCountriesGivenThereAreCountri
 }
 
 func (suite *CountryRepositoryTestSuite) TestHasCountryWithCode() {
-
 	suite.repository.Save(&country.Country{Code: COUNTRY_CODE, Name: COUNTRY_NAME})
+	time.Sleep(100 * time.Millisecond)
 
 	testCases := []struct {
 		code     string

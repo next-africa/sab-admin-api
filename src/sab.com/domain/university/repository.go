@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	UniversityNotFoundError = errors.New("Country with the given ID was not found")
+	UniversityNotFoundError = errors.New("University with the given ID was not found")
 )
 
 type UniversityRepository interface {

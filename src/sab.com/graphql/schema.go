@@ -13,9 +13,6 @@ import (
 
 var nodeDefinitions *relay.NodeDefinitions
 
-// exported schema, defined in init()
-var schema *graphql.Schema
-
 var countrySchema *CountrySchema
 var universitySchema *UniversitySchema
 
@@ -35,15 +32,11 @@ func GetGraphqlHandler(countryService *country.CountryService, universityService
 }
 
 func getSabGraphqlSchema(countryService *country.CountryService, universityService *university.UniversityService) *graphql.Schema {
-	if schema == nil {
-		var err error
-		schema, err = createSchema(countryService, universityService)
-		if err != nil {
-			panic(err)
-		}
+	if schema, err := createSchema(countryService, universityService); err != nil {
+		panic(err)
+	} else {
+		return schema
 	}
-
-	return schema
 }
 
 func createSchema(countryService *country.CountryService, universityService *university.UniversityService) (*graphql.Schema, error) {
