@@ -20,3 +20,8 @@ func (m *UniversityRepositoryMock) GetAll(countryCode string) ([]University, err
 	args := m.Called(countryCode)
 	return args.Get(0).([]University), args.Error(1)
 }
+
+func (m *UniversityRepositoryMock) HasUniversity(id int64, countryCode string) (bool, error) {
+	args := m.Called(id, countryCode)
+	return args.Bool(0), args.Error(1)
+}

@@ -39,8 +39,10 @@ const SidebarContent = (props)=>{
     for(let ind = 0; ind < linksRoutes.length; ind++){
         links.push (
             <span key={ind}  style={styles.sidebarLink} className={linksRoutes[ind].style}>
-                {linksRoutes[ind].text}
 
+                <button
+                    onClick={(event) => {props.setCurrentPage(event, {page:'universities'});}}>{linksRoutes[ind].text}
+                </button>
             </span>
         )
     }
@@ -59,4 +61,5 @@ SidebarContent.propTypes = {
     style: React.PropTypes.object,
     setCurrentPage: React.PropTypes.func,
 }
+
 export default SidebarContent;

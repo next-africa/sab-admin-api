@@ -179,3 +179,11 @@ body {
 .btnNewUniversity{
   float: right;
 }
+
+.modal-content {
+  border: none
+}
+.copyRight {
+  margin-top: auto;
+  float: right;
+}

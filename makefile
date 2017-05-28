@@ -1,10 +1,7 @@
 .PHONY: install setup config
 
 install: setup
-	go get google.golang.org/appengine
-	go get github.com/gorilla/mux
-	go get github.com/gorilla/context
-	go get github.com/stretchr/testify
+	go get -u github.com/kardianos/govendor
 	pip install pyYaml
 
 config:

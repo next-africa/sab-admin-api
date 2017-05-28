@@ -10,7 +10,8 @@ import NewUniversity from './Pages/NewUniversity';
 import ViewUniversity from './Pages/ViewUniversity';
 import Universities from './containers/Universities'
 import  Sidebar  from 'react-sidebar';
-
+import Relay from 'react-relay'
+import Countries from './containers/Countries'
 class App extends Component{
     constructor(props){
         super(props);
@@ -28,17 +29,12 @@ class App extends Component{
             currentPageId : 0,
             universitiesList: []
         }
-
-
     this.currentPage = this.currentPage.bind(this);
     this.setCurrentPage = this.setCurrentPage.bind(this);
     this.onSetDocked = this.onSetDocked.bind(this);
     this.toggleOpen = this.toggleOpen.bind(this);
     this.toggleDocked = this.toggleDocked.bind(this);
     this.generateItem = this.generateItem.bind(this);
-
-
-
     };
     componentDidMount(){
         let that = this
@@ -70,28 +66,23 @@ class App extends Component{
             viewUniversity: <ViewUniversity universitiesList={this.state.universitiesList} currentPageId={this.state.currentPageId}/>,
         }[this.state.currentPage];
     }
-
     componentWillMount() {
         const mql = window.matchMedia(`(min-width: 800px)`);
         mql.addListener(this.mediaQueryChanged);
         this.setState({mql: mql, docked: mql.matches});
     }
-
     componentWillUnmount() {
         this.state.mql.removeListener(this.mediaQueryChanged);
     }
-
     onSetOpen(open) {
         this.setState({open: open});
     }
     onSetDocked(docked) {
         this.setState({docked: !docked});
     }
-
     mediaQueryChanged() {
         this.setState({docked: this.state.mql.matches});
     }
-
     toggleOpen(e) {
         e.preventDefault();
         this.setState({open: !this.state.open});
@@ -134,10 +125,10 @@ class App extends Component{
 
             }
         ]
-
         var items = data.map(this.generateItem);
         var user = userInfos.map(this.generateUserInfos);
-        const sidebar = <SidebarContent />;
+
+        const sidebar = <SidebarContent setCurrentPage={this.setCurrentPage}/>;
 
         const contentHeader = (
 
@@ -149,10 +140,14 @@ class App extends Component{
 
                     {user}
                 </ul>
+                <ul className="nav navbar-nav navbar-right">
+
+                </ul>
 
             </div>
         );
 
+        console.log("here", this.props.country)
         const sidebarProps = {
             sidebar: sidebar,
             docked: this.state.docked,
@@ -180,9 +175,11 @@ class App extends Component{
                                 </div>
                             </div>
                             <footer>
-                                <p>
-                                    <strong>S</strong>tudy <strong>A</strong>broad <strong>B</strong>ot.
-                                </p>
+                                <div className="copyRight">
+                                    <span className="glyphicon glyphicon-copyright-mark"></span>
+                                    <span> {new Date().getFullYear()}</span>
+                                    -Next Africa Inc.  all rights reserved
+                                </div>
                             </footer>
                         </div>
                     </div>
@@ -195,4 +192,19 @@ class App extends Component{
     //children: React.propTypes.node,
 //}
 
-export default App;
+export default Relay.createContainer(App,{
+    initialVariables: {
+        code: "ca"
+    },
+    fragments: {
+        country : () => Relay.QL`
+            fragment on Country{
+                
+                properties{
+                    code
+                    
+                }
+            }
+        `
+    }
+});

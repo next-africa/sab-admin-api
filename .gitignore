@@ -9,7 +9,13 @@ pkg/*
 !src/messenger-sdk
 !src/sab.com
 
+src/sab.com/vendor
+!src/sab.com/vendor/vendor.json
+
 secrets.json
-node_modules/
+node_modules
 
 *.log
+config
+
+.idea/

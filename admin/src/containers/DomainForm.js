@@ -1,14 +1,15 @@
 /**
  * Created by pdiouf on 2017-04-08.
  */
-
+import React from 'react'
 import SingleInput from '../components/SingleInput'
 import TextArea from '../components/TextArea'
 import CheckboxOrRadioGroup from '../components/CheckboxOrRadioGroup'
 
 var TuitionTmp = {"link":'', "amount":''} ;
-domains = [];
-class DomainForm extends Component {
+var domains = [];
+var id = 0;
+class DomainForm extends React.Component {
     constructor(props) {
         super(props);
         this.state ={
